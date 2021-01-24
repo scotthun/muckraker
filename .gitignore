@@ -9,6 +9,10 @@
 /prototypes
 /data/key.json
 /data/__pycache__
+/data/current_members_house.json
+/data/current_members_senate.json
+/data/recent_votes_house.json
+/data/recent_votes_senate.json
 
 # testing
 /coverage
