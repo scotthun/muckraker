@@ -1,13 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
-import Layout from '../src/components/Layout.js'
-import ButtonAppBar from '../src/components/ButtonAppBar.js'
+import Homepage from '../src/components/Homepage.js'
 
 function App() {
   return (
-    <Layout>
+    <Homepage>
 
-    </Layout>
+    </Homepage>
   );
 }
 
