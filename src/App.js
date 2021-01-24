@@ -1,10 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
-import NavigationBar from '../src/components/NavigationBar.js'
+import Layout from '../src/components/Layout.js'
+import ButtonAppBar from '../src/components/ButtonAppBar.js'
 
 function App() {
   return (
-    <NavigationBar />
+    <Layout>
+
+    </Layout>
   );
 }
 
