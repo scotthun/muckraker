@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   
-  section: {
+  spacer: {
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 1),
@@ -22,11 +22,11 @@ const useStyles = makeStyles((theme) => ({
   
 }));
 
-export default function Section() {
+export default function Spacer() {
   const classes = useStyles();
   const theme = useTheme();
 
   return (
-    <div className={classes.section} />
+    <div className={classes.spacer} />
   );
 }

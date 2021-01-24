@@ -17,7 +17,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import HomeIcon from '@material-ui/icons/Home';
 import { Link } from '@material-ui/core';
-import Section from './Section.js'
 
 const drawerWidth = 240;
 
@@ -121,7 +120,9 @@ export default function Layout(props) {
         })}
       >
         <div className={classes.drawerHeader} />
+
         {props.children}
+
       </main>
       <Drawer
         className={classes.drawer}
