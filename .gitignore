@@ -8,6 +8,7 @@
 #user files
 /prototypes
 /data/key.json
+/data/__pycache__
 
 # testing
 /coverage
