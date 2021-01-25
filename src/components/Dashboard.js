@@ -1,6 +1,7 @@
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import './Dashboard.css'
+import StackedBar from './StackedBar.js'
 
 export default function Dashboard(){
 
@@ -14,7 +15,24 @@ export default function Dashboard(){
               </TabList>
 
               <TabPanel>
-                <h2>House</h2>
+                <table width = "100%">
+                  <tr>
+                    <td>
+                    <StackedBar />
+                    </td>
+                    <td>
+                    <StackedBar />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    <StackedBar />
+                    </td>
+                    <td>
+                    <StackedBar />
+                    </td>
+                  </tr>
+                </table>
               </TabPanel>
               <TabPanel>
                 <h2>Senate</h2>
