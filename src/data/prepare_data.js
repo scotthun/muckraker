@@ -14,6 +14,7 @@ var recentVotesHouse = require('./recent_votes_house.json');
 recentVotesHouse = recentVotesHouse["results"]["votes"];
 //console.log(recentVotesHouse)
 
-var data = 666;
+var data = require('./hello.json');
+data = data["message"];
 
 export {data}
