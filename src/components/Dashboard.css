@@ -1,5 +1,9 @@
 #dashboardContainer{
   width: 80%;
   margin-left: 10%;
+  height: 100%;
 }
 
+.dashboardContainer{
+  background-color: #fafafa;
+}

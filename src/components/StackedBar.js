@@ -27,8 +27,8 @@ export default class StackedBar extends React.Component {
           className="clustered-stacked-bar-chart-example"
           xType="ordinal"
           stackBy="y"
-          width={600}
-          height={600}
+          width={500}
+          height={300}
         >
           <DiscreteColorLegend
             style={{position: 'absolute', left: '50px', top: '10px'}}
