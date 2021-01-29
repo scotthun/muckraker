@@ -1,3 +1,6 @@
+
+
+
 var memebrsSenate = require('./current_members_senate.json');
 memebrsSenate = memebrsSenate["results"][0]["members"];
 //console.log(memebrsSenate);
