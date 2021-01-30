@@ -13,7 +13,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import StackedBar from './StackedBar.js'
 import Spacer from './Spacer.js'
 import './TabMenu.css'
+import {dude} from './StackedBarChart.js'
 
+var chart = dude;
+
+//use chartjs https://www.chartjs.org/samples/latest/
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -50,7 +54,6 @@ function a11yProps(index) {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
     width: '100%',
     backgroundColor: theme.palette.background.paper,
   },
@@ -63,13 +66,15 @@ const useStyles = makeStyles((theme) => ({
   selectionText:{
     width: "100%",
     textAlign: "center",
+    margin:0,
+    padding:0,
   },
 }));
 
 export default function TabMenu() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const [currBill, setCurrBill] = React.useState("Dicks");
+  const [currBill, setCurrBill] = React.useState("");
   
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -100,62 +105,60 @@ export default function TabMenu() {
       <Grid 
         container
         direction="row"
-        justify="left"
         alignItems="center"
       >
         <InputLabel>Bill ID: </InputLabel>
         <Select
             labelId="demo-simple-select-label"
-            id="demo-simple-select"
             className={classes.selector}
             onChange={handleCurrBill}
+            //Create menuitems with map
           >
-          <MenuItem className={classes.selection} value={"Put bill id here"}><Typography className={classes.selectionText}>Ten</Typography></MenuItem>
-          <MenuItem className={classes.selection} value={"Put bill id here"}><Typography className={classes.selectionText}>Twenty</Typography></MenuItem>
-          <MenuItem className={classes.selection} value={"Put bill id here"}><Typography className={classes.selectionText}>Thirty</Typography></MenuItem>
+          <MenuItem className={classes.selection} value={"Put bill id here"}><Typography variant="body1" className={classes.selectionText}>Ten</Typography></MenuItem>
+          <MenuItem className={classes.selection} value={"Put bill id here"}><Typography variant="body1" className={classes.selectionText}>Twenty</Typography></MenuItem>
+          <MenuItem className={classes.selection} value={"Put bill id here"}><Typography variant="body1" className={classes.selectionText}>Thirty</Typography></MenuItem>
         </Select>
       </Grid>
       <Spacer />
-      <div class="wrap">
-        <div class="one"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></div>
-        <div class="three"></div>
-        <div class="two"><StackedBar /></div>
+      <div className="wrap">
+        <div className="one"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div>
+        <div className="three"></div>
+        <div className="two"><StackedBar /></div>
       </div>
-      <div class="wrap">
-        <div class="one"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></div>
-        <div class="three"></div>
-        <div class="two"><StackedBar /></div>
+      <div className="wrap">
+        <div className="one"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div>
+        <div className="three"></div>
+        <div className="two" id="stacked"><StackedBar /></div>
       </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Grid 
           container
           direction="row"
-          justify="left"
           alignItems="center"
         >
           <InputLabel>Bill ID: </InputLabel>
           <Select
               labelId="demo-simple-select-label"
-              id="demo-simple-select"
               className={classes.selector}
               onChange={handleCurrBill}
-              >
-              <MenuItem className={classes.selection} value={"Put bill id here"}><Typography className={classes.selectionText}>Ten</Typography></MenuItem>
-              <MenuItem className={classes.selection} value={"Put bill id here"}><Typography className={classes.selectionText}>Twenty</Typography></MenuItem>
-              <MenuItem className={classes.selection} value={"Put bill id here"}><Typography className={classes.selectionText}>Thirty</Typography></MenuItem>
+              label="Hello"
+            >
+            <MenuItem className={classes.selection} value={"Put bill id here"}><Typography variant="body1" className={classes.selectionText}>Ten</Typography></MenuItem>
+            <MenuItem className={classes.selection} value={"Put bill id here"}><Typography variant="body1" className={classes.selectionText}>Twenty</Typography></MenuItem>
+            <MenuItem className={classes.selection} value={"Put bill id here"}><Typography variant="body1" className={classes.selectionText}>Thirty</Typography></MenuItem>
           </Select>
         </Grid>
         <Spacer />
-        <div class="wrap">
-          <div class="one"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></div>
-          <div class="three"></div>
-          <div class="two"><StackedBar /></div>
+        <div className="wrap">
+          <div className="one"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div>
+          <div className="three"></div>
+          <div className="two"><StackedBar /></div>
         </div>
-        <div class="wrap">
-          <div class="one"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></div>
-          <div class="three"></div>
-          <div class="two"><StackedBar /></div>
+        <div className="wrap">
+          <div className="one"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div>
+          <div className="three"></div>
+          <div className="two"><StackedBar /></div>
         </div>
       </TabPanel>
     </div>

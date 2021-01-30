@@ -17,7 +17,7 @@
   display: inline;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 850px) {
   .wrap {
     flex-direction: column;
   }

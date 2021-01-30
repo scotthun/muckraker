@@ -5459,6 +5459,11 @@
   dependencies:
     "map-cache" "^0.2.2"
 
+"frappe-charts@^1.5.6":
+  "integrity" "sha512-1OWqF7ijDba+Nlei/CjXSORYlUm+/M0oeVOP3Yu7R2bLBDc5GYkFSHGVx13XavuCxDoOPEJZMRgRK6GUAuB8FQ=="
+  "resolved" "https://registry.npmjs.org/frappe-charts/-/frappe-charts-1.5.6.tgz"
+  "version" "1.5.6"
+
 "fresh@0.5.2":
   "integrity" "sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac="
   "resolved" "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz"
