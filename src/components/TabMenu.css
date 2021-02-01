@@ -24,11 +24,6 @@
   font-size: 8px;
 }
 
-.chart-container svg{
-  min-width: 350px;
-}
-
-
 
 
 
@@ -53,34 +48,7 @@
     display: hide;
   }
 
-  .chart-container svg{
-    min-width: 350px;
-  }
 }
 
-@media (max-width: 450px) {
-  .wrap {
-    flex-direction: column;
-  }
-  
-  .one {
-    width: 80%;
-    margin-right: 10%;
-    margin-left: 0%;
-  }
 
-  .two {
-    width: 100%;
-    margin-right: 0%;
-    margin-left: 0%;
-  }
-
-  .three{
-    display: hide;
-  }
-
-  .chart-container svg{
-    min-width: 350px;
-  }
-}
 

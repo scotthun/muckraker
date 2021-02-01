@@ -17,6 +17,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import HomeIcon from '@material-ui/icons/Home';
 import { Link } from '@material-ui/core';
+import './Layout.css'
 
 const drawerWidth = 240;
 
@@ -100,7 +101,7 @@ export default function Layout(props) {
         })}
       >
         <Toolbar>
-          <Typography variant="h6" noWrap className={classes.title}>
+          <Typography variant="h6" noWrap className={classes.title} id="websiteName">
             WATCHING THE WATCHMEN
           </Typography>
           <IconButton
@@ -115,6 +116,7 @@ export default function Layout(props) {
         </Toolbar>
       </AppBar>
       <main
+      id="bodyContent"
         className={clsx(classes.content, {
           [classes.contentShift]: open,
         })}

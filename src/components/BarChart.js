@@ -10,142 +10,51 @@ import { ResponsiveBar } from '@nivo/bar'
 
 var data =[
   {
-    "country": "AD",
+    "vote": "Yes",
     "hot dog": 103,
-    "hot dogColor": "hsl(242, 70%, 50%)",
     "burger": 94,
-    "burgerColor": "hsl(193, 70%, 50%)",
-    "sandwich": 177,
-    "sandwichColor": "hsl(73, 70%, 50%)",
-    "kebab": 88,
-    "kebabColor": "hsl(190, 70%, 50%)",
-    "fries": 90,
-    "friesColor": "hsl(234, 70%, 50%)",
-    "donut": 42,
-    "donutColor": "hsl(156, 70%, 50%)"
+    "sandwich": 177
   },
   {
-    "country": "AE",
+    "vote": "No",
     "hot dog": 76,
-    "hot dogColor": "hsl(2, 70%, 50%)",
     "burger": 199,
-    "burgerColor": "hsl(38, 70%, 50%)",
-    "sandwich": 109,
-    "sandwichColor": "hsl(95, 70%, 50%)",
-    "kebab": 191,
-    "kebabColor": "hsl(116, 70%, 50%)",
-    "fries": 77,
-    "friesColor": "hsl(305, 70%, 50%)",
-    "donut": 53,
-    "donutColor": "hsl(225, 70%, 50%)"
+    "sandwich": 109
   },
   {
-    "country": "AF",
+    "vote": "Not Voting",
     "hot dog": 142,
-    "hot dogColor": "hsl(153, 70%, 50%)",
     "burger": 140,
-    "burgerColor": "hsl(329, 70%, 50%)",
-    "sandwich": 76,
-    "sandwichColor": "hsl(298, 70%, 50%)",
-    "kebab": 6,
-    "kebabColor": "hsl(164, 70%, 50%)",
-    "fries": 96,
-    "friesColor": "hsl(91, 70%, 50%)",
-    "donut": 124,
-    "donutColor": "hsl(279, 70%, 50%)"
+    "sandwich": 76
   },
   {
-    "country": "AG",
+    "vote": "Present",
     "hot dog": 161,
-    "hot dogColor": "hsl(81, 70%, 50%)",
     "burger": 121,
-    "burgerColor": "hsl(116, 70%, 50%)",
-    "sandwich": 56,
-    "sandwichColor": "hsl(329, 70%, 50%)",
-    "kebab": 93,
-    "kebabColor": "hsl(209, 70%, 50%)",
-    "fries": 7,
-    "friesColor": "hsl(213, 70%, 50%)",
-    "donut": 96,
-    "donutColor": "hsl(250, 70%, 50%)"
-  },
-  {
-    "country": "AI",
-    "hot dog": 80,
-    "hot dogColor": "hsl(49, 70%, 50%)",
-    "burger": 89,
-    "burgerColor": "hsl(137, 70%, 50%)",
-    "sandwich": 5,
-    "sandwichColor": "hsl(57, 70%, 50%)",
-    "kebab": 18,
-    "kebabColor": "hsl(13, 70%, 50%)",
-    "fries": 105,
-    "friesColor": "hsl(171, 70%, 50%)",
-    "donut": 189,
-    "donutColor": "hsl(297, 70%, 50%)"
-  },
-  {
-    "country": "AL",
-    "hot dog": 56,
-    "hot dogColor": "hsl(213, 70%, 50%)",
-    "burger": 6,
-    "burgerColor": "hsl(44, 70%, 50%)",
-    "sandwich": 5,
-    "sandwichColor": "hsl(224, 70%, 50%)",
-    "kebab": 6,
-    "kebabColor": "hsl(301, 70%, 50%)",
-    "fries": 89,
-    "friesColor": "hsl(296, 70%, 50%)",
-    "donut": 53,
-    "donutColor": "hsl(330, 70%, 50%)"
-  },
-  {
-    "country": "AM",
-    "hot dog": 9,
-    "hot dogColor": "hsl(259, 70%, 50%)",
-    "burger": 84,
-    "burgerColor": "hsl(277, 70%, 50%)",
-    "sandwich": 163,
-    "sandwichColor": "hsl(252, 70%, 50%)",
-    "kebab": 54,
-    "kebabColor": "hsl(9, 70%, 50%)",
-    "fries": 111,
-    "friesColor": "hsl(153, 70%, 50%)",
-    "donut": 126,
-    "donutColor": "hsl(352, 70%, 50%)"
+    "sandwich": 56
   }
 ]
 
 var pieData = [
   {
-    "id": "sass",
-    "label": "sass",
-    "value": 231,
-    "color": "hsl(204, 70%, 50%)"
+    "id": "Yes",
+    "label": "Yes",
+    "value": 231
   },
   {
-    "id": "elixir",
-    "label": "elixir",
-    "value": 560,
-    "color": "hsl(104, 70%, 50%)"
+    "id": "No",
+    "label": "No",
+    "value": 560
   },
   {
-    "id": "python",
-    "label": "python",
-    "value": 580,
-    "color": "hsl(315, 70%, 50%)"
+    "id": "Not Voting",
+    "label": "Not Voting",
+    "value": 580
   },
   {
-    "id": "css",
-    "label": "css",
-    "value": 140,
-    "color": "hsl(207, 70%, 50%)"
-  },
-  {
-    "id": "java",
-    "label": "java",
-    "value": 236,
-    "color": "hsl(104, 70%, 50%)"
+    "id": "Present",
+    "label": "Present",
+    "value": 140
   }
 ]
 

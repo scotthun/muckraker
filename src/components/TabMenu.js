@@ -223,47 +223,13 @@ export default function TabMenu() {
         <div className="two" id="stacked">
         <ResponsiveBar
         data={data}
-        keys={[ 'hot dog', 'burger', 'sandwich', 'kebab', 'fries', 'donut' ]}
-        indexBy="country"
+        keys={[ 'hot dog', 'burger', 'sandwich' ]}
+        indexBy="vote"
         margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
         padding={0.3}
         valueScale={{ type: 'linear' }}
         indexScale={{ type: 'band', round: true }}
-        colors={{ scheme: 'nivo' }}
-        defs={[
-            {
-                id: 'dots',
-                type: 'patternDots',
-                background: 'inherit',
-                color: '#38bcb2',
-                size: 4,
-                padding: 1,
-                stagger: true
-            },
-            {
-                id: 'lines',
-                type: 'patternLines',
-                background: 'inherit',
-                color: '#eed312',
-                rotation: -45,
-                lineWidth: 6,
-                spacing: 10
-            }
-        ]}
-        fill={[
-            {
-                match: {
-                    id: 'fries'
-                },
-                id: 'dots'
-            },
-            {
-                match: {
-                    id: 'sandwich'
-                },
-                id: 'lines'
-            }
-        ]}
+        colors={["#0015BC", "#E9141D", "#000000"]}
         borderColor={{ from: 'color', modifiers: [ [ 'darker', 1.6 ] ] }}
         axisTop={null}
         axisRight={null}
@@ -271,7 +237,7 @@ export default function TabMenu() {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'country',
+            legend: 'Vote type',
             legendPosition: 'middle',
             legendOffset: 32
         }}
@@ -279,13 +245,13 @@ export default function TabMenu() {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'food',
+            legend: 'Number of Votes',
             legendPosition: 'middle',
             legendOffset: -40
         }}
         labelSkipWidth={12}
         labelSkipHeight={12}
-        labelTextColor={{ from: 'color', modifiers: [ [ 'darker', 1.6 ] ] }}
+        labelTextColor="#ffffff"
         legends={[
             {
                 dataFrom: 'keys',
@@ -339,12 +305,12 @@ export default function TabMenu() {
         <div className="wrap">
           <div className="one"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div>
           <div className="three"></div>
-          <div className="two"><StackedBar /></div>
+          <div className="two"></div>
         </div>
         <div className="wrap">
           <div className="one"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div>
           <div className="three"></div>
-          <div className="two"><StackedBar /></div>
+          <div className="two"></div>
         </div>
       </TabPanel>
     </div>
