@@ -22,28 +22,72 @@ class VoteData {
       this.voteObject = voteObject;
   }
 
-  getPieData() {
-    var chartData = new Object();
-    chartData["labels"] = ["YES", "NO", "PRESENT", "ABSTAIN"];
-    var datasets = new Array();
-    
-    datasets.push(this.getVoteDataset("total", "pie"));
-    
+  getPartyKeys() {
+    return ["Independent", "Republican", "Democrat"];
+  }
 
-    chartData["datasets"] = datasets;
-    return chartData;
+  getVoteTypeKeys() {
+    return ["Y", "N", "NV", "P"]
+  }
+
+  transformFriendlyKeyToObjectKey(friendlyKey){
+    var objectKey;
+    switch (friendlyKey) {
+      case "Y":
+        objectKey = "yes";
+        break;
+      case "N":
+        objectKey = "no";
+        break;
+      case "NV":
+        objectKey = "not_voting";
+        break;
+      case "P":
+        objectKey = "present";
+        break;
+      case "Independent":
+        objectKey = "independent";
+        break;
+      case "Republican":
+        objectKey = "republican";
+        break;
+      case "Democrat":
+        objectKey = "democratic";
+    }
+    return objectKey;
   }
 
   getBarData() {
-    var chartData = new Object();
-    chartData["labels"] = ["YES", "NO", "PRESENT", "ABSTAIN"];
-    var datasets = new Array();
-    let partyNames = ["Democratic", "Republican", "Independent"];
-    for(let partyName of partyNames){
-      datasets.push(this.getVoteDataset(partyName, "bar"));
-    }
+    var chartData = new Array();
 
-    chartData["datasets"] = datasets;
+    for(let key of  this.getVoteTypeKeys()){
+      var dataElement = new Object();
+      dataElement["vote"] = key;
+      for(let party of this.getPartyKeys()){
+        var lookupPartyKey = this.transformFriendlyKeyToObjectKey(party);
+        var lookupVoteKey = this.transformFriendlyKeyToObjectKey(key);
+        var numVotes = this.voteObject[lookupPartyKey][lookupVoteKey];  
+        dataElement[party] = numVotes;
+      }
+      chartData.push(dataElement);
+    }
+    return chartData;
+  }
+
+  getPieData() {
+    var chartData = new Array();
+
+    for(let key of  this.getVoteTypeKeys()){
+      var dataElement = new Object();
+      dataElement["id"] = key;
+      dataElement["label"] = key;
+      var totalVotes = this.voteObject["total"];
+      var lookupVoteKy = this.transformFriendlyKeyToObjectKey(key);
+      
+      dataElement["value"] = totalVotes[lookupVoteKy]
+
+      chartData.push(dataElement);
+    }
     return chartData;
   }
 
@@ -73,13 +117,13 @@ for (let index of Object.keys(recentVotesSentate) ){
   let vote =  new VoteData(recentVotesSentate[index]);
   arrSenateVoteObjects.push(vote);
   
-  console.log(vote.getBarData());
   console.log(vote.getPieData());
-  console.log(vote.getVoteDataset("democratic", "bar"));
-  console.log(vote.getVoteDataset("republican", "bar"));
-  console.log(vote.getVoteDataset("independent", "bar"));
-  console.log(vote.getVoteDataset("total", "pie"));
-  break;
+  //console.log(vote.getPieData());
+  //console.log(vote.getVoteDataset("democratic", "bar"));
+  //console.log(vote.getVoteDataset("republican", "bar"));
+  //console.log(vote.getVoteDataset("independent", "bar"));
+  //console.log(vote.getVoteDataset("total", "pie"));
+  //break;
   
 }
 

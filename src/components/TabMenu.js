@@ -10,12 +10,8 @@ import Box from '@material-ui/core/Box';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import StackedBar from './StackedBar.js'
 import Spacer from './Spacer.js'
 import './TabMenu.css'
-import StackedBarChart from './StackedBarChart.js'
-import {arrSenateVoteObjects, arrHouseVoteObjects} from '../data/prepare_data.js'
-import PieChart from './PieChart.js';
 import {data, pieData} from './BarChart.js'
 import { ResponsiveBar } from '@nivo/bar'
 import { ResponsivePie } from '@nivo/pie'
