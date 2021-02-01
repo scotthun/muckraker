@@ -12,7 +12,6 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import './TabMenu.css'
 import Spacer from './Spacer.js'
-import {data, pieData} from './BarChart.js'
 import {arrHouseVoteObjects, arrSenateVoteObjects} from '../data/prepare_data.js'
 import StackedBarChart from './StackedBarChart.js'
 import PieChart from './PieChart.js'
@@ -75,14 +74,19 @@ const useStyles = makeStyles((theme) => ({
 export default function TabMenu() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const [currBill, setCurrBill] = React.useState("");
+  const [currVoteHouse, setCurrVoteHouse] = React.useState(0);
+  const [currVoteSenate, setCurrVoteSenate] = React.useState(0);
   
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const handleCurrBill = (event, newValue) => {
-    setCurrBill(event.target.value);
+  const handleCurrVoteHouse = (event, newValue) => {
+    setCurrVoteHouse(event.target.value);
+  };
+
+  const handleCurrVoteSenate = (event, newValue) => {
+    setCurrVoteSenate(event.target.value);
   };
 
   return (
@@ -112,12 +116,12 @@ export default function TabMenu() {
         <Select
             labelId="demo-simple-select-label"
             className={classes.selector}
-            onChange={handleCurrBill}
-            //Create menuitems with map
+            onChange={handleCurrVoteHouse}
+            value={currVoteHouse}
           >
-          <MenuItem className={classes.selection} value={"Put bill id here"}><Typography variant="body1" className={classes.selectionText}>Ten</Typography></MenuItem>
-          <MenuItem className={classes.selection} value={"Put bill id here"}><Typography variant="body1" className={classes.selectionText}>Twenty</Typography></MenuItem>
-          <MenuItem className={classes.selection} value={"Put bill id here"}><Typography variant="body1" className={classes.selectionText}>Thirty</Typography></MenuItem>
+           {arrHouseVoteObjects.map((voteObject, index) =>
+            <MenuItem className={classes.selection} value={index} key={index}><Typography variant="body1" className={classes.selectionText}>{index}</Typography></MenuItem>
+           )}
         </Select>
       </Grid>
       <Spacer />
@@ -125,14 +129,14 @@ export default function TabMenu() {
         <div className="one"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div>
         <div className="three"></div>
         <div className="two" id="pieStacked">
-         <PieChart data={arrHouseVoteObjects[0]} />
+         <PieChart data={arrHouseVoteObjects[currVoteHouse]} />
         </div>
       </div>
       <div className="wrap">
         <div className="one"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div>
         <div className="three"></div>
         <div className="two" id="stacked">
-          <StackedBarChart data={arrHouseVoteObjects[0]} />
+          <StackedBarChart data={arrHouseVoteObjects[currVoteHouse]} />
         </div>
       </div>
       </TabPanel>
@@ -146,24 +150,29 @@ export default function TabMenu() {
           <Select
               labelId="demo-simple-select-label"
               className={classes.selector}
-              onChange={handleCurrBill}
               label="Hello"
+              onChange={handleCurrVoteSenate}
+              value={currVoteSenate}
             >
-            <MenuItem className={classes.selection} value={"Put bill id here"}><Typography variant="body1" className={classes.selectionText}>Ten</Typography></MenuItem>
-            <MenuItem className={classes.selection} value={"Put bill id here"}><Typography variant="body1" className={classes.selectionText}>Twenty</Typography></MenuItem>
-            <MenuItem className={classes.selection} value={"Put bill id here"}><Typography variant="body1" className={classes.selectionText}>Thirty</Typography></MenuItem>
+            {arrSenateVoteObjects.map((voteObject, index) =>
+            <MenuItem className={classes.selection} value={index} key={index}><Typography variant="body1" className={classes.selectionText}>{index}</Typography></MenuItem>
+            )}
           </Select>
         </Grid>
         <Spacer />
         <div className="wrap">
           <div className="one"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div>
           <div className="three"></div>
-          <div className="two"></div>
+          <div className="two">
+            <PieChart data={arrSenateVoteObjects[currVoteSenate]} />
+          </div>
         </div>
         <div className="wrap">
           <div className="one"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div>
           <div className="three"></div>
-          <div className="two"></div>
+          <div className="two">
+            <StackedBarChart data={arrSenateVoteObjects[currVoteSenate]} />
+          </div>
         </div>
       </TabPanel>
     </div>
