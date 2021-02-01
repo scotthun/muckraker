@@ -1,7 +1,6 @@
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import './Dashboard.css'
-import StackedBar from './StackedBar.js'
 import Spacer from './Spacer.js'
 import TabMenu from './TabMenu.js'
 
