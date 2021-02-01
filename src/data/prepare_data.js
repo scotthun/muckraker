@@ -24,7 +24,7 @@ class VoteData {
 
   getPieData() {
     var chartData = new Object();
-    chartData["labels"] = ["YES", "NO", "PRESENT", "NOT VOTING"];
+    chartData["labels"] = ["YES", "NO", "PRESENT", "ABSTAIN"];
     var datasets = new Array();
     
     datasets.push(this.getVoteDataset("total", "pie"));
@@ -36,7 +36,7 @@ class VoteData {
 
   getBarData() {
     var chartData = new Object();
-    chartData["labels"] = ["YES", "NO", "PRESENT", "NOT VOTING"];
+    chartData["labels"] = ["YES", "NO", "PRESENT", "ABSTAIN"];
     var datasets = new Array();
     let partyNames = ["Democratic", "Republican", "Independent"];
     for(let partyName of partyNames){
@@ -68,8 +68,11 @@ class VoteData {
   
 }
 
-for (let index of Object.keys(recentVotesHouse) ){
-  let vote =  new VoteData(recentVotesHouse[index])
+var arrSenateVoteObjects = new Array();
+for (let index of Object.keys(recentVotesSentate) ){
+  let vote =  new VoteData(recentVotesSentate[index]);
+  arrSenateVoteObjects.push(vote);
+  
   console.log(vote.getBarData());
   console.log(vote.getPieData());
   console.log(vote.getVoteDataset("democratic", "bar"));
@@ -77,7 +80,26 @@ for (let index of Object.keys(recentVotesHouse) ){
   console.log(vote.getVoteDataset("independent", "bar"));
   console.log(vote.getVoteDataset("total", "pie"));
   break;
+  
 }
+
+var arrHouseVoteObjects = new Array();
+for (let index of Object.keys(recentVotesHouse) ){
+  let vote =  new VoteData(recentVotesHouse[index]);
+  arrHouseVoteObjects.push(vote);
+  /*
+  console.log(vote.getBarData());
+  console.log(vote.getPieData());
+  console.log(vote.getVoteDataset("democratic", "bar"));
+  console.log(vote.getVoteDataset("republican", "bar"));
+  console.log(vote.getVoteDataset("independent", "bar"));
+  console.log(vote.getVoteDataset("total", "pie"));
+  break;
+  */
+}
+
+export {arrHouseVoteObjects}
+export {arrSenateVoteObjects}
 
 var data = require('./hello.json');
 data = data["message"];
