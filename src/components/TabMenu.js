@@ -10,11 +10,12 @@ import Box from '@material-ui/core/Box';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import Spacer from './Spacer.js'
 import './TabMenu.css'
+import Spacer from './Spacer.js'
 import {data, pieData} from './BarChart.js'
-import { ResponsiveBar } from '@nivo/bar'
-import { ResponsivePie } from '@nivo/pie'
+import {arrHouseVoteObjects, arrSenateVoteObjects} from '../data/prepare_data.js'
+import StackedBarChart from './StackedBarChart.js'
+import PieChart from './PieChart.js'
 
 //use chartjs https://www.chartjs.org/samples/latest/
 
@@ -124,158 +125,14 @@ export default function TabMenu() {
         <div className="one"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div>
         <div className="three"></div>
         <div className="two" id="pieStacked">
-        <ResponsivePie
-        data={pieData}
-        margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-        innerRadius={0.5}
-        padAngle={0.7}
-        cornerRadius={3}
-        colors={{ scheme: 'nivo' }}
-        borderWidth={1}
-        borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.2 ] ] }}
-        radialLabelsSkipAngle={10}
-        radialLabelsLinkOffset={-24}
-        radialLabelsTextColor="#333333"
-        radialLabelsLinkColor={{ from: 'color' }}
-        sliceLabelsSkipAngle={10}
-        sliceLabelsTextColor="#333333"
-        defs={[
-            {
-                id: 'dots',
-                type: 'patternDots',
-                background: 'inherit',
-                color: 'rgba(255, 255, 255, 0.3)',
-                size: 4,
-                padding: 1,
-                stagger: true
-            },
-            {
-                id: 'lines',
-                type: 'patternLines',
-                background: 'inherit',
-                color: 'rgba(255, 255, 255, 0.3)',
-                rotation: -45,
-                lineWidth: 6,
-                spacing: 10
-            }
-        ]}
-        fill={[
-            {
-                match: {
-                    id: 'ruby'
-                },
-                id: 'dots'
-            },
-            {
-                match: {
-                    id: 'c'
-                },
-                id: 'dots'
-            },
-            {
-                match: {
-                    id: 'go'
-                },
-                id: 'dots'
-            },
-            {
-                match: {
-                    id: 'python'
-                },
-                id: 'dots'
-            },
-            {
-                match: {
-                    id: 'scala'
-                },
-                id: 'lines'
-            },
-            {
-                match: {
-                    id: 'lisp'
-                },
-                id: 'lines'
-            },
-            {
-                match: {
-                    id: 'elixir'
-                },
-                id: 'lines'
-            },
-            {
-                match: {
-                    id: 'javascript'
-                },
-                id: 'lines'
-            }
-        ]}
-        legends={[]}
-    />
+         <PieChart data={arrHouseVoteObjects[0]} />
         </div>
       </div>
       <div className="wrap">
         <div className="one"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div>
         <div className="three"></div>
         <div className="two" id="stacked">
-        <ResponsiveBar
-        data={data}
-        keys={[ 'hot dog', 'burger', 'sandwich' ]}
-        indexBy="vote"
-        margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
-        padding={0.3}
-        valueScale={{ type: 'linear' }}
-        indexScale={{ type: 'band', round: true }}
-        colors={["#0015BC", "#E9141D", "#000000"]}
-        borderColor={{ from: 'color', modifiers: [ [ 'darker', 1.6 ] ] }}
-        axisTop={null}
-        axisRight={null}
-        axisBottom={{
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: 'Vote type',
-            legendPosition: 'middle',
-            legendOffset: 32
-        }}
-        axisLeft={{
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: 'Number of Votes',
-            legendPosition: 'middle',
-            legendOffset: -40
-        }}
-        labelSkipWidth={12}
-        labelSkipHeight={12}
-        labelTextColor="#ffffff"
-        legends={[
-            {
-                dataFrom: 'keys',
-                anchor: 'bottom-right',
-                direction: 'column',
-                justify: false,
-                translateX: 120,
-                translateY: 0,
-                itemsSpacing: 2,
-                itemWidth: 100,
-                itemHeight: 20,
-                itemDirection: 'left-to-right',
-                itemOpacity: 0.85,
-                symbolSize: 20,
-                effects: [
-                    {
-                        on: 'hover',
-                        style: {
-                            itemOpacity: 1
-                        }
-                    }
-                ]
-            }
-        ]}
-        animate={true}
-        motionStiffness={90}
-        motionDamping={15}
-    />
+          <StackedBarChart data={arrHouseVoteObjects[0]} />
         </div>
       </div>
       </TabPanel>
