@@ -112,7 +112,7 @@ export default function TabMenu() {
         direction="row"
         alignItems="center"
       >
-        <InputLabel>Bill ID: </InputLabel>
+        <InputLabel>Vote ID: </InputLabel>
         <Select
             labelId="demo-simple-select-label"
             className={classes.selector}
@@ -146,7 +146,7 @@ export default function TabMenu() {
           direction="row"
           alignItems="center"
         >
-          <InputLabel>Bill ID: </InputLabel>
+          <InputLabel>Vote ID: </InputLabel>
           <Select
               labelId="demo-simple-select-label"
               className={classes.selector}
