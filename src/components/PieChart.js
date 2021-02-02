@@ -9,11 +9,11 @@ export default function PieChart(props) {
         innerRadius={0.5}
         padAngle={0.7}
         cornerRadius={3}
-        colors={{ scheme: 'nivo' }}
+        colors={{ scheme: 'dark2' }}
         borderWidth={1}
         borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.2 ] ] }}
         radialLabelsSkipAngle={10}
-        radialLabelsLinkOffset={-24}
+        radialLabelsLinkOffset={0}
         radialLabelsTextColor="#333333"
         radialLabelsLinkColor={{ from: 'color' }}
         sliceLabelsSkipAngle={10}

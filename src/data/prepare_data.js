@@ -17,6 +17,7 @@ var recentVotesHouse = require('./recent_votes_house.json');
 recentVotesHouse = recentVotesHouse["results"]["votes"];
 //console.log(recentVotesHouse)
 
+
 class VoteData {
   constructor(voteObject) {
       this.voteObject = voteObject;
@@ -90,24 +91,26 @@ class VoteData {
     }
     return chartData;
   }
+  
 
-  //name can be 'democratic', 'republican', 'independent', or 'total'
-  getVoteDataset(name, chartType) {
-    var dataset = new Object();
-    dataset["name"] = name;
-    dataset["chartType"] = chartType;
+  getSummaryData() {
 
-    var voteNumbers = new Array();
-    var searchName = name.toLowerCase();
+  }
+  
+}
 
-    voteNumbers.push(this.voteObject[searchName]["yes"]);
-    voteNumbers.push(this.voteObject[searchName]["no"]);
-    voteNumbers.push(this.voteObject[searchName]["present"]);
-    voteNumbers.push(this.voteObject[searchName]["not_voting"]);
+class MemberData {
+  constructor(memberObject) {
+      this.memberObject = memberObject;
+  }
 
-    dataset["values"] = voteNumbers;
+  getMemberData() {
 
-    return dataset;
+    var member= new Object();
+    var middleName = this.memberObject.middle_name === null ? " " : (" " + this.memberObject.middle_name + " ");
+    member["name"] = this.memberObject.first_name +  middleName +  this.memberObject.last_name;
+    member["id"] = this.memberObject.id;
+    return member;
   }
   
 }
@@ -117,7 +120,7 @@ for (let index of Object.keys(recentVotesSentate) ){
   let vote =  new VoteData(recentVotesSentate[index]);
   arrSenateVoteObjects.push(vote);
   
-  console.log(vote.getPieData());
+  //console.log(vote.getPieData());
   //console.log(vote.getPieData());
   //console.log(vote.getVoteDataset("democratic", "bar"));
   //console.log(vote.getVoteDataset("republican", "bar"));
@@ -142,8 +145,26 @@ for (let index of Object.keys(recentVotesHouse) ){
   */
 }
 
+var arrMembersSenate = new Array();
+for(let index of membersSenate) {
+  let member = new MemberData(index);
+  arrMembersSenate.push(member.getMemberData());
+  //console.log (member.getMemberData());
+  //break;
+}
+
+var arrMembersHouse = new Array();
+for(let index of membersHouse) {
+  let member = new MemberData(index);
+  arrMembersHouse.push(member.getMemberData());
+  //console.log (member.getMemberData());
+  //break;
+}
+
 export {arrHouseVoteObjects}
 export {arrSenateVoteObjects}
+export {arrMembersHouse}
+export {arrMembersSenate}
 
 var data = require('./hello.json');
 data = data["message"];

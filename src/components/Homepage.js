@@ -1,5 +1,4 @@
 import React from "react";
-import 'react-tabs/style/react-tabs.css';
 import Layout from './Layout.js'
 import Dashboard from './Dashboard.js'
 import Spacer from './Spacer.js'

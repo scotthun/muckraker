@@ -10,11 +10,15 @@ import Box from '@material-ui/core/Box';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import Button from '@material-ui/core/Button';
 import './TabMenu.css'
 import Spacer from './Spacer.js'
-import {arrHouseVoteObjects, arrSenateVoteObjects} from '../data/prepare_data.js'
+import {arrHouseVoteObjects, arrSenateVoteObjects, arrMembersSenate, arrMembersHouse} from '../data/prepare_data.js'
 import StackedBarChart from './StackedBarChart.js'
 import PieChart from './PieChart.js'
+import VoteSearchBar from './VoteSearchBar.js'
 
 //use chartjs https://www.chartjs.org/samples/latest/
 
@@ -133,7 +137,9 @@ export default function TabMenu() {
         </div>
       </div>
       <div className="wrap">
-        <div className="one"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div>
+        <div className="one">
+          <VoteSearchBar members={arrMembersHouse} type="Representative"/>
+        </div>
         <div className="three"></div>
         <div className="two" id="stacked">
           <StackedBarChart data={arrHouseVoteObjects[currVoteHouse]} />
@@ -168,7 +174,9 @@ export default function TabMenu() {
           </div>
         </div>
         <div className="wrap">
-          <div className="one"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div>
+          <div className="one">
+              <VoteSearchBar members={arrMembersSenate} type="Senator"/>
+          </div>
           <div className="three"></div>
           <div className="two">
             <StackedBarChart data={arrSenateVoteObjects[currVoteSenate]} />
