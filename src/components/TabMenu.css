@@ -1,0 +1,50 @@
+.wrap {
+  display: flex;
+  width: 100%;
+}
+
+.one {
+  width:40%;
+  margin-left: 5%;
+  height: 400px;
+}
+
+.two {
+  width: 40%;
+  margin-right: 5%;
+  height: 400px;
+}
+
+.three {
+  width: 10%;
+  display: inline;
+}
+
+
+
+
+@media (max-width: 850px) {
+  .wrap {
+    flex-direction: column;
+  }
+  
+  .one {
+    width: 100%;
+    margin-right: 0%;
+    margin-left: 0%;
+  }
+
+  .two {
+    width: 100%;
+    margin-right: 0%;
+    margin-left: 0%;
+  }
+
+  .three{
+    display: hide;
+  }
+
+}
+
+
+
