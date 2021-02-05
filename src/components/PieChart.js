@@ -13,7 +13,8 @@ export default function PieChart(props) {
         borderWidth={1}
         borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.2 ] ] }}
         radialLabelsSkipAngle={10}
-        radialLabelsLinkOffset={0}
+        radialLabelsLinkOffset={4}
+        radialLabelsLinkDiagonalLength={26}
         radialLabelsTextColor="#333333"
         radialLabelsLinkColor={{ from: 'color' }}
         sliceLabelsSkipAngle={10}
@@ -88,7 +89,31 @@ export default function PieChart(props) {
                 id: 'lines'
             }
         ]}
-        legends={[]}
+        legends={[
+          {
+              anchor: 'bottom',
+              direction: 'row',
+              justify: false,
+              translateX: 0,
+              translateY: 56,
+              itemsSpacing: 0,
+              itemWidth: 45,
+              itemHeight: 18,
+              itemTextColor: '#999',
+              itemDirection: 'left-to-right',
+              itemOpacity: 1,
+              symbolSize: 18,
+              symbolShape: 'circle',
+              effects: [
+                  {
+                      on: 'hover',
+                      style: {
+                          itemTextColor: '#000'
+                      }
+                  }
+              ]
+          }
+      ]}
     />
   );
 }

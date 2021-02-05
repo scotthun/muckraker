@@ -9,6 +9,7 @@ recentVotesSentate = recentVotesSentate["results"]["votes"];
 
 var recentVotesHouse = require('./recent_votes_house.json');
 recentVotesHouse = recentVotesHouse["results"]["votes"];
+console.log( Object.keys(recentVotesHouse[0]["amendment"]).length );
 
 class VoteData {
   constructor(voteObject) {
@@ -118,9 +119,43 @@ class VoteData {
     return mapLegendHints;
   }
   
+  getSourceURL() {
+    return this.voteObject.vote_uri;
+  }
+
+  getSelectBarText() {
+    var id ="";
+    if(this.voteObject["bill"] !== undefined && Object.keys(this.voteObject["bill"]).length !== 0 ){
+      if(this.voteObject["bill"]["bill_id"] !== undefined){
+        id = this.voteObject["bill"]["bill_id"] + ", ";
+      }
+    }
+    else if(this.voteObject["nomination"] !== undefined){
+      if(this.voteObject["nomination"]["nomination_id"] !== undefined){
+        id = this.voteObject["nomination"]["nomination_id"] + ", ";
+      }
+    }
+
+    id += this.voteObject["date"] + " " + this.voteObject["time"];
+    return id;
+  }
 
   getSummaryData() {
-
+    
+    let summary = {
+      "bill_id": this.voteObject["bill"]["bill_id"],
+      "nomination_id":  "nomination" in this.voteObject ? this.voteObject["nomination"]["nomination_id" ]: '',
+      "date": this.voteObject["date"],
+      "time": this.voteObject["time"],
+      "description": this.voteObject["description"],
+      "question": this.voteObject["question"],
+      "question_text": this.voteObject["question_text"],
+      "latest_action": this.voteObject["bill"]["latest_action"],
+      "vote_type": this.voteObject["vote_type"],
+      "result": this.voteObject["result"],
+      "source": this.voteObject["source"]
+    };
+    return summary;
   }
   
 }
@@ -149,12 +184,14 @@ var arrSenateVoteObjects = new Array();
 for (let index of Object.keys(recentVotesSentate) ){
   let vote =  new VoteData(recentVotesSentate[index]);
   arrSenateVoteObjects.push(vote);
+  console.log(vote.getSummaryData());
 }
 
 var arrHouseVoteObjects = new Array();
 for (let index of Object.keys(recentVotesHouse) ){
   let vote =  new VoteData(recentVotesHouse[index]);
   arrHouseVoteObjects.push(vote);
+  console.log(vote.getSummaryData());
 }
 
 var arrMembersSenate = new Array();
@@ -173,6 +210,8 @@ export {arrHouseVoteObjects}
 export {arrSenateVoteObjects}
 export {arrMembersHouse}
 export {arrMembersSenate}
+export {recentVotesHouse}
+export {recentVotesSentate}
 
 var data = require('./hello.json');
 data = data["message"];
