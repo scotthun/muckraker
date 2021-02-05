@@ -133,7 +133,7 @@ export default function TabMenu() {
       <Spacer />
       <div className="wrap">
         <div className="one">
-          <VoteSummary data={arrHouseVoteObjects[currVoteHouse].getSummaryData()}/>
+          <VoteSummary data={arrHouseVoteObjects[currVoteHouse].getSummaryData()} />
         </div>
         <div className="three"></div>
         <div className="two">

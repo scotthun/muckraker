@@ -3,13 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   voteWrapper: {
-    width: '100%',
     border: '1px solid #3f51b5',
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
   },
   title: {
     textAlign: 'center',
@@ -21,11 +15,12 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     backgroundColor: '#3f51b5',
     color : '#fff',
+    overflowWrap: 'break-word',
+    wordWrap: 'break-word',
   },
   voteSectionContent: {
-    width: '98%',
+    width: '100%',
     marginLeft: '1%',
-    textAlign: 'left',
     overflowWrap: 'break-word',
     wordWrap: 'break-word',
   },
@@ -80,3 +75,17 @@ export default function VoteSummary(props) {
     </div>
   );
 }
+
+/*
+<div className={classes.voteWrapper}>
+      
+
+        {getRows().map((row, index) => (
+            <div key={index} className={index % 2 === 0 ? classes.voteSectionTitle : classes.voteSectionContent}>
+              { row }
+            </div>
+        ))
+        }
+      
+    </div>
+*/
