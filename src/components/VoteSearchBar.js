@@ -17,8 +17,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-//search for vote by vote_uri
-
 export default function VoteSearchBar(props) {
   
   const [currMemberID, setCurrMemberID] = React.useState("");

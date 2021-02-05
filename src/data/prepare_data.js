@@ -178,20 +178,17 @@ class MemberData {
 
 
 let vote =  new VoteData(recentVotesHouse[15]);
-console.log(vote.getLegendHints());
 
 var arrSenateVoteObjects = new Array();
 for (let index of Object.keys(recentVotesSentate) ){
   let vote =  new VoteData(recentVotesSentate[index]);
   arrSenateVoteObjects.push(vote);
-  console.log(vote.getSummaryData());
 }
 
 var arrHouseVoteObjects = new Array();
 for (let index of Object.keys(recentVotesHouse) ){
   let vote =  new VoteData(recentVotesHouse[index]);
   arrHouseVoteObjects.push(vote);
-  console.log(vote.getSummaryData());
 }
 
 var arrMembersSenate = new Array();

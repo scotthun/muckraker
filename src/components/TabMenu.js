@@ -16,7 +16,6 @@ import {arrHouseVoteObjects, arrSenateVoteObjects, arrMembersSenate, arrMembersH
 import StackedBarChart from './StackedBarChart.js'
 import PieChart from './PieChart.js'
 import VoteSearchBar from './VoteSearchBar.js'
-import VoteTable from './VoteTable.js'
 import VoteSummary from './VoteSummary.js'
 
 function TabPanel(props) {
