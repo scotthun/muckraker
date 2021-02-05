@@ -75,17 +75,3 @@ export default function VoteSummary(props) {
     </div>
   );
 }
-
-/*
-<div className={classes.voteWrapper}>
-      
-
-        {getRows().map((row, index) => (
-            <div key={index} className={index % 2 === 0 ? classes.voteSectionTitle : classes.voteSectionContent}>
-              { row }
-            </div>
-        ))
-        }
-      
-    </div>
-*/
