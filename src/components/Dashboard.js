@@ -13,7 +13,7 @@ export default function Dashboard(){
 
   return (
     <div id="dashboardContainer">
-      <Typography variant='h3'>Dashboard</Typography>
+      <Typography variant='h3' id='dashboard'>Dashboard</Typography>
       <TabMenu />
     </div>
   );

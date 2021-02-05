@@ -17,6 +17,7 @@ export default class Homepage extends React.Component {
           <Layout>
             <Spacer />
             <Dashboard />
+            <Spacer />
           </Layout>
       );
   }

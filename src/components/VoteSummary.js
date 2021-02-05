@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     wordWrap: 'break-word',
   },
   voteSectionContent: {
-    width: '100%',
+    width: '98%',
     marginLeft: '1%',
     overflowWrap: 'break-word',
     wordWrap: 'break-word',
@@ -42,6 +42,10 @@ export default function VoteSummary(props) {
       if(props.data[key] === null){
         continue;
       }
+
+      if(props.data[key] === undefined){
+        continue;
+      }
       
       newObject[key.replace("_", " ").toUpperCase()] = props.data[key];
     }
@@ -55,6 +59,7 @@ export default function VoteSummary(props) {
     for(var key in summary){
       items.push(key);
       items.push(summary[key]);
+      console.log(typeof summary[key] + key +summary[key])
     }
     return items;
   }
