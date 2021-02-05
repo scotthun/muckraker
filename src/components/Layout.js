@@ -152,7 +152,7 @@ export default function Layout(props) {
             <ListItemText primary="Home" />
           </ListItem>
         </Link>
-        <Link href="#">
+        <Link href="#dashboardContainer">
           <ListItem button key="Dashboard">
             <ListItemIcon>
               <DashboardIcon />
