@@ -12,11 +12,11 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import './TabMenu.css'
 import Spacer from './Spacer.js'
-import {arrHouseVoteObjects, arrSenateVoteObjects} from '../data/prepare_data.js'
+import {arrHouseVoteObjects, arrSenateVoteObjects, arrMembersSenate, arrMembersHouse, recentVotesHouse, recentVotesSentate} from '../data/prepare_data.js'
 import StackedBarChart from './StackedBarChart.js'
 import PieChart from './PieChart.js'
-
-//use chartjs https://www.chartjs.org/samples/latest/
+import VoteSearchBar from './VoteSearchBar.js'
+import VoteSummary from './VoteSummary.js'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -32,7 +32,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={3}>
-          <Typography>{children}</Typography>
+          {children}
         </Box>
       )}
     </div>
@@ -58,18 +58,16 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   selector:{
-    minWidth: 300,
+    with:'100%',
+    padding :0,
   },
   selection:{
-    textAlign: 'center',
   },
   selectionText:{
-    width: "100%",
-    textAlign: "center",
-    margin:0,
-    padding:0,
+
   },
 }));
+
 
 export default function TabMenu() {
   const classes = useStyles();
@@ -88,6 +86,13 @@ export default function TabMenu() {
   const handleCurrVoteSenate = (event, newValue) => {
     setCurrVoteSenate(event.target.value);
   };
+
+  function generateLegendHints(voteObject) {
+    return Object.keys(voteObject.getLegendHints()).map((key, index) => 
+           key + " - " + voteObject.getLegendHints()[key].replace("_", " ") + 
+           (index === (Object.keys(voteObject.getLegendHints()).length-1) ? "" : ", "
+    )); 
+  }
 
   return (
     <div className={classes.root}>
@@ -114,28 +119,45 @@ export default function TabMenu() {
       >
         <InputLabel>Vote ID: </InputLabel>
         <Select
-            labelId="demo-simple-select-label"
+            labelId="demo-simple-select"
             className={classes.selector}
             onChange={handleCurrVoteHouse}
             value={currVoteHouse}
           >
            {arrHouseVoteObjects.map((voteObject, index) =>
-            <MenuItem className={classes.selection} value={index} key={index}><Typography variant="body1" className={classes.selectionText}>{index}</Typography></MenuItem>
+            <MenuItem className={classes.selection} value={index} key={index}>{arrHouseVoteObjects[index].getSelectBarText()}</MenuItem>
            )}
         </Select>
       </Grid>
       <Spacer />
       <div className="wrap">
-        <div className="one"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div>
+        <div className="one">
+          <VoteSummary data={arrHouseVoteObjects[currVoteHouse].getSummaryData()} />
+        </div>
         <div className="three"></div>
-        <div className="two" id="pieStacked">
+        <div className="two">
+        <Typography variant="h5" align="center">
+            Vote count
+        </Typography>
+        <Typography variant="body1" align="center">
+            {generateLegendHints(arrHouseVoteObjects[currVoteHouse])}
+          </Typography>
          <PieChart data={arrHouseVoteObjects[currVoteHouse]} />
         </div>
       </div>
+      <Spacer />
       <div className="wrap">
-        <div className="one"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div>
+        <div className="one">
+          <VoteSearchBar members={arrMembersHouse} type="Representative" chamberVotes={recentVotesHouse} source={arrHouseVoteObjects[currVoteHouse].getSourceURL()}/>
+        </div>
         <div className="three"></div>
-        <div className="two" id="stacked">
+        <div className="two">
+          <Typography variant="h5" align="center">
+            Vote breakdown by party
+          </Typography>
+          <Typography variant="body1" align="center">
+            {generateLegendHints(arrHouseVoteObjects[currVoteHouse])}
+          </Typography>
           <StackedBarChart data={arrHouseVoteObjects[currVoteHouse]} />
         </div>
       </div>
@@ -155,26 +177,44 @@ export default function TabMenu() {
               value={currVoteSenate}
             >
             {arrSenateVoteObjects.map((voteObject, index) =>
-            <MenuItem className={classes.selection} value={index} key={index}><Typography variant="body1" className={classes.selectionText}>{index}</Typography></MenuItem>
+            <MenuItem className={classes.selection} value={index} key={index}>{arrSenateVoteObjects[index].getSelectBarText()}</MenuItem>
             )}
           </Select>
         </Grid>
         <Spacer />
         <div className="wrap">
-          <div className="one"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div>
+          <div className="one">
+            <VoteSummary data={arrSenateVoteObjects[currVoteSenate].getSummaryData()}/>
+          </div>
           <div className="three"></div>
           <div className="two">
+          <Typography variant="h5" align="center">
+            Vote count
+          </Typography>
+          <Typography variant="body1" align="center">
+            {generateLegendHints(arrSenateVoteObjects[currVoteSenate])}
+          </Typography>
             <PieChart data={arrSenateVoteObjects[currVoteSenate]} />
           </div>
         </div>
+        <Spacer />
         <div className="wrap">
-          <div className="one"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div>
+          <div className="one">
+              <VoteSearchBar members={arrMembersSenate} type="Senator" chamberVotes={recentVotesSentate} source={arrSenateVoteObjects[currVoteSenate].getSourceURL()}/>
+          </div>
           <div className="three"></div>
           <div className="two">
+            <Typography variant="h5" align="center">
+              Vote breakdown by party
+            </Typography>
+            <Typography variant="body1" align="center">
+             {generateLegendHints(arrSenateVoteObjects[currVoteSenate])}
+            </Typography>
             <StackedBarChart data={arrSenateVoteObjects[currVoteSenate]} />
           </div>
         </div>
       </TabPanel>
+      <Spacer />
     </div>
   );
 }

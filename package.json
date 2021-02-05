@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.57",
     "@nivo/bar": "^0.67.0",
     "@nivo/core": "^0.67.0",
     "@nivo/pie": "^0.67.0",
@@ -15,8 +16,6 @@
     "react": "16.14.0",
     "react-dom": "16.14.0",
     "react-scripts": "4.0.1",
-    "react-tabs": "^3.1.2",
-    "react-vis": "^1.11.7",
     "sass": "^1.32.5",
     "web-vitals": "^0.2.4"
   },

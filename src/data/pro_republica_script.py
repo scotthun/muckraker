@@ -38,3 +38,37 @@ for nombre in jsonFiles:
          json.dump(jsonFiles[nombre], json_file)
 
 
+#print(jsonFiles["current_members_senate"]["results"][0]["members"][0])
+
+for member in jsonFiles["current_members_senate"]["results"][0]["members"]:
+    memberID = member["id"]
+    url = "https://api.propublica.org/congress/v1/members/" + memberID +"/votes.json"
+    req = urllib.request.Request(url, None, header)
+    response = urllib.request.urlopen(req)
+    source = response.read()
+    data = json.loads(source)
+    if data['status']== "OK":
+        
+        with open("member_data/"+ memberID + ".json", 'w') as json_file:
+            json.dump(data, json_file)
+       
+    else:
+        print("Error with GET Request, try again")
+        sys.exit(1)
+        
+        
+for member in jsonFiles["current_members_house"]["results"][0]["members"]:
+    memberID = member["id"]
+    url = "https://api.propublica.org/congress/v1/members/" + memberID +"/votes.json"
+    req = urllib.request.Request(url, None, header)
+    response = urllib.request.urlopen(req)
+    source = response.read()
+    data = json.loads(source)
+    if data['status']== "OK":
+        
+        with open("member_data/"+ memberID + ".json", 'w') as json_file:
+            json.dump(data, json_file)
+       
+    else:
+        print("Error with GET Request, try again")
+        sys.exit(1)

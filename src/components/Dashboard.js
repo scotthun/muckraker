@@ -1,5 +1,3 @@
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import 'react-tabs/style/react-tabs.css';
 import './Dashboard.css'
 import Spacer from './Spacer.js'
 import TabMenu from './TabMenu.js'

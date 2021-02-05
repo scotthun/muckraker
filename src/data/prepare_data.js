@@ -1,21 +1,15 @@
-
-
-
 var membersSenate = require('./current_members_senate.json');
 membersSenate = membersSenate["results"][0]["members"];
-//console.log(memebrsSenate);
 
 var membersHouse = require('./current_members_house.json');
 membersHouse = membersHouse["results"][0]["members"];
-//console.log(membersHouse);
 
 var recentVotesSentate = require('./recent_votes_senate.json');
 recentVotesSentate = recentVotesSentate["results"]["votes"];
-//console.log(recentVotesSentate)
 
 var recentVotesHouse = require('./recent_votes_house.json');
 recentVotesHouse = recentVotesHouse["results"]["votes"];
-//console.log(recentVotesHouse)
+console.log( Object.keys(recentVotesHouse[0]["amendment"]).length );
 
 class VoteData {
   constructor(voteObject) {
@@ -23,51 +17,61 @@ class VoteData {
   }
 
   getPartyKeys() {
-    return ["Independent", "Republican", "Democrat"];
+    return ["independent", "republican", "democratic"];
+  }
+
+  getFriendlyPartyKeys(){
+    var keys = this.getPartyKeys();
+    for(var i = 0; i <keys.length; i++){
+      keys[i] = keys[i].toUpperCase();
+    }
+    return keys;
   }
 
   getVoteTypeKeys() {
-    return ["Y", "N", "NV", "P"]
+    return Object.keys(this.voteObject["total"]);
   }
 
-  transformFriendlyKeyToObjectKey(friendlyKey){
-    var objectKey;
-    switch (friendlyKey) {
-      case "Y":
-        objectKey = "yes";
-        break;
-      case "N":
-        objectKey = "no";
-        break;
-      case "NV":
-        objectKey = "not_voting";
-        break;
-      case "P":
-        objectKey = "present";
-        break;
-      case "Independent":
-        objectKey = "independent";
-        break;
-      case "Republican":
-        objectKey = "republican";
-        break;
-      case "Democrat":
-        objectKey = "democratic";
+  hasKeyAlready(obj, key) {
+    return obj[key] === undefined ? false : true;
+  }
+
+  transformToAbbreviatedKey(key){
+    var wordsSeparetedByUnderscore = key.split("_");
+    var wordsSeparetedBySpace = key.split(" ");
+    var newKey = "";
+
+    if(wordsSeparetedByUnderscore.length === 2 ){
+      newKey += (wordsSeparetedByUnderscore[0][0] + wordsSeparetedByUnderscore[1][0]);
     }
-    return objectKey;
+
+    else if(wordsSeparetedBySpace.length === 2 ){
+      newKey += (wordsSeparetedBySpace[0][0] + wordsSeparetedBySpace[1][0]);
+    }
+
+    else {
+      newKey += key[0][0];
+    }
+    return newKey.toUpperCase();
   }
 
   getBarData() {
     var chartData = new Array();
+    var existingVoteKeys = new Object();
 
-    for(let key of  this.getVoteTypeKeys()){
+    for(let key of this.getVoteTypeKeys()){
       var dataElement = new Object();
-      dataElement["vote"] = key;
+      var voteKeyForNewElement = this.transformToAbbreviatedKey(key);
+      var hasKey = voteKeyForNewElement in existingVoteKeys;
+      if(hasKey){
+        voteKeyForNewElement+= key[1].toUpperCase();
+      }
+      dataElement["vote"] = voteKeyForNewElement;
+      existingVoteKeys[voteKeyForNewElement] = 1;
       for(let party of this.getPartyKeys()){
-        var lookupPartyKey = this.transformFriendlyKeyToObjectKey(party);
-        var lookupVoteKey = this.transformFriendlyKeyToObjectKey(key);
-        var numVotes = this.voteObject[lookupPartyKey][lookupVoteKey];  
-        dataElement[party] = numVotes;
+        var numVotes = this.voteObject[party][key];  
+        
+        dataElement[party.toUpperCase()] = numVotes === undefined ? 0 : numVotes;
       }
       chartData.push(dataElement);
     }
@@ -76,160 +80,136 @@ class VoteData {
 
   getPieData() {
     var chartData = new Array();
+    var existingVoteKeys = new Object();
 
     for(let key of  this.getVoteTypeKeys()){
       var dataElement = new Object();
-      dataElement["id"] = key;
-      dataElement["label"] = key;
-      var totalVotes = this.voteObject["total"];
-      var lookupVoteKy = this.transformFriendlyKeyToObjectKey(key);
+      var newKey = this.transformToAbbreviatedKey(key);
+      var hasKey = newKey in existingVoteKeys;
+      if(hasKey){
+        newKey += key[1].toUpperCase();
+      }
+      dataElement["id"] = newKey;
+      dataElement["label"] =  dataElement["id"];
+      existingVoteKeys[newKey] = 1;
       
-      dataElement["value"] = totalVotes[lookupVoteKy]
+      var totalVotes = this.voteObject["total"];
+      
+      dataElement["value"] = totalVotes[key]
 
       chartData.push(dataElement);
     }
     return chartData;
   }
 
-  //name can be 'democratic', 'republican', 'independent', or 'total'
-  getVoteDataset(name, chartType) {
-    var dataset = new Object();
-    dataset["name"] = name;
-    dataset["chartType"] = chartType;
+  getLegendHints() {
+    var keys = this.getVoteTypeKeys();
 
-    var voteNumbers = new Array();
-    var searchName = name.toLowerCase();
+    var mapLegendHints = new Object();
 
-    voteNumbers.push(this.voteObject[searchName]["yes"]);
-    voteNumbers.push(this.voteObject[searchName]["no"]);
-    voteNumbers.push(this.voteObject[searchName]["present"]);
-    voteNumbers.push(this.voteObject[searchName]["not_voting"]);
+    for(var i = 0; i < keys.length ; i++ ){
+      var newKey = this.transformToAbbreviatedKey(keys[i]);
+      var hasKey = newKey in mapLegendHints;
+      if(hasKey){
+        newKey += keys[i][1].toUpperCase();
+      }
+      mapLegendHints[newKey] = keys[i];
+    }
 
-    dataset["values"] = voteNumbers;
+    return mapLegendHints;
+  }
+  
+  getSourceURL() {
+    return this.voteObject.vote_uri;
+  }
 
-    return dataset;
+  getSelectBarText() {
+    var id ="";
+    if(this.voteObject["bill"] !== undefined && Object.keys(this.voteObject["bill"]).length !== 0 ){
+      if(this.voteObject["bill"]["bill_id"] !== undefined){
+        id = this.voteObject["bill"]["bill_id"] + ", ";
+      }
+    }
+    else if(this.voteObject["nomination"] !== undefined){
+      if(this.voteObject["nomination"]["nomination_id"] !== undefined){
+        id = this.voteObject["nomination"]["nomination_id"] + ", ";
+      }
+    }
+
+    id += this.voteObject["date"] + " " + this.voteObject["time"];
+    return id;
+  }
+
+  getSummaryData() {
+    
+    let summary = {
+      "bill_id": this.voteObject["bill"]["bill_id"],
+      "nomination_id":  "nomination" in this.voteObject ? this.voteObject["nomination"]["nomination_id" ]: '',
+      "date": this.voteObject["date"],
+      "time": this.voteObject["time"],
+      "description": this.voteObject["description"],
+      "question": this.voteObject["question"],
+      "question_text": this.voteObject["question_text"],
+      "latest_action": this.voteObject["bill"]["latest_action"],
+      "vote_type": this.voteObject["vote_type"],
+      "result": this.voteObject["result"],
+      "source": this.voteObject["source"]
+    };
+    return summary;
   }
   
 }
+
+class MemberData {
+  constructor(memberObject) {
+      this.memberObject = memberObject;
+  }
+
+  getMemberData() {
+
+    var member= new Object();
+    var middleName = this.memberObject.middle_name === null ? " " : (" " + this.memberObject.middle_name + " ");
+    member["name"] = this.memberObject.first_name +  middleName +  this.memberObject.last_name;
+    member["id"] = this.memberObject.id;
+    return member;
+  }
+  
+}
+
+
+let vote =  new VoteData(recentVotesHouse[15]);
 
 var arrSenateVoteObjects = new Array();
 for (let index of Object.keys(recentVotesSentate) ){
   let vote =  new VoteData(recentVotesSentate[index]);
   arrSenateVoteObjects.push(vote);
-  
-  console.log(vote.getPieData());
-  //console.log(vote.getPieData());
-  //console.log(vote.getVoteDataset("democratic", "bar"));
-  //console.log(vote.getVoteDataset("republican", "bar"));
-  //console.log(vote.getVoteDataset("independent", "bar"));
-  //console.log(vote.getVoteDataset("total", "pie"));
-  //break;
-  
 }
 
 var arrHouseVoteObjects = new Array();
 for (let index of Object.keys(recentVotesHouse) ){
   let vote =  new VoteData(recentVotesHouse[index]);
   arrHouseVoteObjects.push(vote);
-  /*
-  console.log(vote.getBarData());
-  console.log(vote.getPieData());
-  console.log(vote.getVoteDataset("democratic", "bar"));
-  console.log(vote.getVoteDataset("republican", "bar"));
-  console.log(vote.getVoteDataset("independent", "bar"));
-  console.log(vote.getVoteDataset("total", "pie"));
-  break;
-  */
+}
+
+var arrMembersSenate = new Array();
+for(let index of membersSenate) {
+  let member = new MemberData(index);
+  arrMembersSenate.push(member.getMemberData());
+}
+
+var arrMembersHouse = new Array();
+for(let index of membersHouse) {
+  let member = new MemberData(index);
+  arrMembersHouse.push(member.getMemberData());
 }
 
 export {arrHouseVoteObjects}
 export {arrSenateVoteObjects}
+export {arrMembersHouse}
+export {arrMembersSenate}
+export {recentVotesHouse}
+export {recentVotesSentate}
 
 var data = require('./hello.json');
 data = data["message"];
 export {data}
-
-/*
-import { Chart } from "frappe-charts/dist/frappe-charts.esm.js";
-import "frappe-charts/dist/frappe-charts.min.css";
-
-var dude = new Chart(".chart", {
-  // or DOM element
-  data: {
-    labels: ["YES", "NO"],
-    datasets: [
-      {
-        name: "Democrat",
-        chartType: "bar",
-        values: [40, 10]
-      },
-      {
-        name: "Republican",
-        chartType: "bar",
-        values: [10, 40]
-      }
-    ]
-  },
-
-  title: "My Awesome Chart",
-  type: "bar", // or 'bar', 'line', 'pie', 'percentage'
-  height: 500,
-  colors: ["#0015BC", "#FF0000"],
-  axisOptions: {
-    xIsSeries: true
-  },
-  barOptions: {
-    stacked: true,
-    spaceRatio: 0.5
-  },
-  tooltipOptions: {
-    formatTooltipX: (d) => (d + "").toUpperCase(),
-    formatTooltipY: (d) => d + " pts"
-  }
-});
-
-//dude.removeDataPoint(0)
-
-export { dude };
-
-
-*/
-
-/*
-import { Chart } from "frappe-charts/dist/frappe-charts.esm.js";
-import "frappe-charts/dist/frappe-charts.min.css";
-
-new Chart("#chart", {
-  // or DOM element
-  data: {
-    labels: ["YES", "NO", "PRESENT", "NOT VOTING"],
-
-    datasets: [
-      {
-        name: "Some Data",
-        chartType: "pie",
-        values: [25, 40, 30, 35]
-      }
-    ]
-  },
-
-  title: "My Awesome Pie Chart",
-  type: "pie", // or 'bar', 'line', 'pie', 'percentage'
-  height: 500,
-  colors: ["purple", "#ffa3ef", "light-blue", "red"],
-  axisOptions: {
-    xAxisMode: "tick",
-    xIsSeries: true
-  },
-  barOptions: {
-    stacked: false,
-    spaceRatio: 1.0
-  },
-  tooltipOptions: {
-    formatTooltipX: (d) => (d + "").toUpperCase(),
-    formatTooltipY: (d) => d + " pts"
-  }
-});
-
-
-*/

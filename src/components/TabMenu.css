@@ -1,18 +1,19 @@
 .wrap {
   display: flex;
   width: 100%;
+  flex-direction: none;
 }
 
 .one {
   width:40%;
   margin-left: 5%;
-  height: 400px;
+  height: 700px;
 }
 
 .two {
   width: 40%;
   margin-right: 5%;
-  height: 400px;
+  height: 700px;
 }
 
 .three {
@@ -20,7 +21,9 @@
   display: inline;
 }
 
-
+.boxDiv {
+  width: 100%;
+}
 
 
 @media (max-width: 850px) {
@@ -29,13 +32,13 @@
   }
   
   .one {
-    width: 100%;
+    width: 80vw;
     margin-right: 0%;
     margin-left: 0%;
   }
 
   .two {
-    width: 100%;
+    width: 80vw;
     margin-right: 0%;
     margin-left: 0%;
   }
