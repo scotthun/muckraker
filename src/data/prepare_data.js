@@ -171,6 +171,24 @@ class MemberData {
     var middleName = this.memberObject.middle_name === null ? " " : (" " + this.memberObject.middle_name + " ");
     member["name"] = this.memberObject.first_name +  middleName +  this.memberObject.last_name;
     member["id"] = this.memberObject.id;
+    member["title"] = this.memberObject.title;
+    member["date_of_birth"] = this.memberObject.date_of_birth;
+    member["gender"] = this.memberObject.gender;
+    member["party"] = this.memberObject.party;
+    member["state"] = this.memberObject.state;
+    member["district"] = this.memberObject.district;
+    member["next_election"] = this.memberObject.next_election;
+    member["missed_votes"] = this.memberObject.missed_votes;
+    member["total_votes"] = this.memberObject.total_votes;
+    member["missed_vote_pct"] = this.memberObject.missed_vote_pct;
+    member["votes_with_party_pct"] = this.memberObject.votes_with_party_pct;
+    member["votes_against_party_pct"] = this.memberObject.votes_against_party_pct;
+    member["next_election"] = this.memberObject.next_election;
+    member["office"] = this.memberObject.office;
+    member["phone"] = this.memberObject.phone;
+    member["twitter_account"] = this.memberObject.twitter_account;
+    member["facebook_account"] = this.memberObject.facebook_account;
+    member["youtube_account"] = this.memberObject.youtube_account;
     return member;
   }
   
@@ -203,12 +221,44 @@ for(let index of membersHouse) {
   arrMembersHouse.push(member.getMemberData());
 }
 
+var arrMembersAll = arrMembersSenate;
+arrMembersAll = arrMembersAll.concat(arrMembersHouse);
+
+function getLegislatorData(legislatorArray, index){
+  let legislatorData = {
+    "title": legislatorArray[index]["title"],
+    "date_of_birth": legislatorArray[index]["date_of_birth"],
+    "gender": legislatorArray[index]["gender"],
+    "party": legislatorArray[index]["party"],
+    "state": legislatorArray[index]["state"],
+    "district": legislatorArray[index]["district"],
+    "next_election": legislatorArray[index]["next_election"],
+    "missed_votes": legislatorArray[index]["missed_votes"],
+    "total_votes": legislatorArray[index]["total_votes"],
+    "missed_vote_pct": legislatorArray[index]["missed_vote_pct"],
+    "votes_with_party_pct": legislatorArray[index]["votes_with_party_pct"],
+    "votes_against_party_pct": legislatorArray[index]["votes_against_party_pct"],
+    "next_election": legislatorArray[index]["next_election"],
+    "url": legislatorArray[index]["url"],
+    "office": legislatorArray[index]["office"],
+    "phone": legislatorArray[index]["phone"],
+    "twitter_account": legislatorArray[index]["twitter_account"],
+    "facebook_account": legislatorArray[index]["facebook_account"],
+    "youtube_account": legislatorArray[index]["youtube_account"]
+  }
+
+  return legislatorData;
+
+}
+
 export {arrHouseVoteObjects}
 export {arrSenateVoteObjects}
 export {arrMembersHouse}
 export {arrMembersSenate}
+export {arrMembersAll}
 export {recentVotesHouse}
 export {recentVotesSentate}
+export default getLegislatorData
 
 var data = require('./hello.json');
 data = data["message"];

@@ -47,7 +47,7 @@ export default function VoteSummary(props) {
         continue;
       }
       
-      newObject[key.replace("_", " ").toUpperCase()] = props.data[key];
+      newObject[key.replace(/_/g, " ").toUpperCase()] = props.data[key];
     }
     return newObject;
   }
@@ -59,7 +59,6 @@ export default function VoteSummary(props) {
     for(var key in summary){
       items.push(key);
       items.push(summary[key]);
-      console.log(typeof summary[key] + key +summary[key])
     }
     return items;
   }

@@ -146,7 +146,7 @@ export default function Layout(props) {
         <ListItem button key="Home">
           <ListItemIcon>
             <HomeIcon />
-            </ListItemIcon>a    
+            </ListItemIcon>    
             <ListItemText primary="Home" />
           </ListItem>
         </Link>
