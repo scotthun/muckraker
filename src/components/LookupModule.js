@@ -55,7 +55,6 @@ function useWindowSize() {
 
 export default function LookupModule(){
 
-  const [isActiveMember, setActiveMember] = React.useState(true);
   const [currMemberID, setCurrMemberID] = React.useState(arrMembersAll[0].id);
   const [currMemberName, setCurrMemberName] = React.useState(arrMembersAll[0].name);
   const [currMember, setCurrMember] = React.useState(arrMembersAll[0]);
@@ -69,19 +68,6 @@ export default function LookupModule(){
     var newMemberName = value === null ? "" : value.name;
     setCurrMemberName(newMemberName);
     setCurrMember(value);
-  };
-
-  const handleResults = (event, value) => {
-    
-    if(currMemberName === ""){
-      alert("Please Select a valid legislator to continue")
-    }
-
-    setActiveMember(true);
-  };
-
-  const handleClear = () => {
-    setActiveMember(false);
   };
 
  const classes = useStyles();
@@ -104,27 +90,11 @@ export default function LookupModule(){
         </Grid>
       </Grid>
       <Grid container ></Grid>
-      <Grid container >
-      <Grid item xs={1}>
-        </Grid>
-        <Grid item xs={5}>
-          <Button variant="contained" color="primary" fullWidth={true} onClick={handleResults}>
-            Search
-          </Button>
-        </Grid>
-        <Grid item xs={5}>
-          <Button variant="contained" color="secondary" fullWidth={true} onClick={handleClear}>
-            Clear
-          </Button>
-        </Grid>
-        <Grid item xs={1}>
-        </Grid>
-      </Grid>
       <Spacer />
       <div>
-        {isActiveMember === true ?  <Typography variant="h5" align='center'>{currMemberName}</Typography> : null}
-        {isActiveMember === true && currMember !== null ?   <img className={classes.centeredImage} src={"https://theunitedstates.io/images/congress/"+ width+"x"+ height +"/"+ currMemberID +".jpg"} align="center"/> : <div></div>}
-        {isActiveMember === true && currMember !== null ? <div style={{width: width + "px", display: 'block', margin: '0 auto'}}><VoteSummary data={currMember}/></div> : <div></div>}
+        <Typography variant="h5" align='center'>{currMemberName}</Typography>
+        {currMember !== null ?   <img className={classes.centeredImage} src={"https://theunitedstates.io/images/congress/"+ width+"x"+ height +"/"+ currMemberID +".jpg"} align="center"/> : <div></div>}
+        {currMember !== null ? <div style={{width: width + "px", display: 'block', margin: '0 auto'}}><VoteSummary data={currMember}/></div> : <div></div>}
       </div>
     </div>
   );

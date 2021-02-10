@@ -231,7 +231,3 @@ export {arrMembersSenate}
 export {arrMembersAll}
 export {recentVotesHouse}
 export {recentVotesSentate}
-
-var data = require('./hello.json');
-data = data["message"];
-export {data}
