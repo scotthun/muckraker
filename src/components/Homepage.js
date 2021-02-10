@@ -2,8 +2,7 @@ import React from "react";
 import Layout from './Layout.js'
 import Dashboard from './Dashboard.js'
 import Spacer from './Spacer.js'
-import {data} from '../data/prepare_data.js'
-
+import LookupLegislators from './LookupLegislators.js'
 
 export default class Homepage extends React.Component {
   constructor(props) {
@@ -15,8 +14,12 @@ export default class Homepage extends React.Component {
   render() {
       return (
           <Layout>
-            <Spacer />
+            <div id="dashboard"></div>
+            <Spacer/>
             <Dashboard />
+            <div id='legislators'></div>
+            <Spacer />
+            <LookupLegislators />
           </Layout>
       );
   }

@@ -1,5 +1,4 @@
 import React from "react";
-import { render } from "react-dom";
 import { ResponsiveBar } from "@nivo/bar";
 
 export default function StackedBarChart(props) {
