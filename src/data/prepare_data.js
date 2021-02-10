@@ -224,33 +224,6 @@ for(let index of membersHouse) {
 var arrMembersAll = arrMembersSenate;
 arrMembersAll = arrMembersAll.concat(arrMembersHouse);
 
-function getLegislatorData(legislatorArray, index){
-  let legislatorData = {
-    "title": legislatorArray[index]["title"],
-    "date_of_birth": legislatorArray[index]["date_of_birth"],
-    "gender": legislatorArray[index]["gender"],
-    "party": legislatorArray[index]["party"],
-    "state": legislatorArray[index]["state"],
-    "district": legislatorArray[index]["district"],
-    "next_election": legislatorArray[index]["next_election"],
-    "missed_votes": legislatorArray[index]["missed_votes"],
-    "total_votes": legislatorArray[index]["total_votes"],
-    "missed_vote_pct": legislatorArray[index]["missed_vote_pct"],
-    "votes_with_party_pct": legislatorArray[index]["votes_with_party_pct"],
-    "votes_against_party_pct": legislatorArray[index]["votes_against_party_pct"],
-    "next_election": legislatorArray[index]["next_election"],
-    "url": legislatorArray[index]["url"],
-    "office": legislatorArray[index]["office"],
-    "phone": legislatorArray[index]["phone"],
-    "twitter_account": legislatorArray[index]["twitter_account"],
-    "facebook_account": legislatorArray[index]["facebook_account"],
-    "youtube_account": legislatorArray[index]["youtube_account"]
-  }
-
-  return legislatorData;
-
-}
-
 export {arrHouseVoteObjects}
 export {arrSenateVoteObjects}
 export {arrMembersHouse}
@@ -258,7 +231,6 @@ export {arrMembersSenate}
 export {arrMembersAll}
 export {recentVotesHouse}
 export {recentVotesSentate}
-export default getLegislatorData
 
 var data = require('./hello.json');
 data = data["message"];
