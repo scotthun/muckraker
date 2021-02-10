@@ -74,7 +74,7 @@ export default function LookupModule(){
     <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Typography variant="h6" align='center'> Use the search bar below to see the voting profile of a specific Legislator</Typography>
+          <Typography variant="h6" align='center'> Use the search bar below to see the voting profile of a specific legislator</Typography>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
