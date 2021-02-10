@@ -16,8 +16,10 @@ export default class Homepage extends React.Component {
   render() {
       return (
           <Layout>
-            <Spacer />
+            <div id="dashboard"></div>
+            <Spacer/>
             <Dashboard />
+            <div id='legislators'></div>
             <Spacer />
             <LookupLegislators />
           </Layout>

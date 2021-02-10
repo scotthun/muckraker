@@ -15,6 +15,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import HomeIcon from '@material-ui/icons/Home';
 import { Link } from '@material-ui/core';
 import './Layout.css'
@@ -156,6 +157,14 @@ export default function Layout(props) {
             <DashboardIcon />
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
+          </ListItem>
+        </Link>
+        <Link href="#legislators">
+          <ListItem button key="Legislators">
+            <ListItemIcon>
+            <AccountBalanceIcon />
+            </ListItemIcon>
+            <ListItemText primary="Legislators" />
           </ListItem>
         </Link>
         </List>
