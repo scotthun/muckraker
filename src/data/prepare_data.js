@@ -9,7 +9,6 @@ recentVotesSentate = recentVotesSentate["results"]["votes"];
 
 var recentVotesHouse = require('./recent_votes_house.json');
 recentVotesHouse = recentVotesHouse["results"]["votes"];
-console.log( Object.keys(recentVotesHouse[0]["amendment"]).length );
 
 class VoteData {
   constructor(voteObject) {
