@@ -13,6 +13,7 @@ src/data/current_members_house.json
 src/data/current_members_senate.json
 src/data/recent_votes_house.json
 src/data/recent_votes_senate.json
+src/data/member_data
 
 # testing
 /coverage
