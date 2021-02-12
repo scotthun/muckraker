@@ -7,7 +7,7 @@
 
 #user files
 /prototypes
-src/data/key.json
+src/key.json
 src/data/__pycache__
 src/data/current_members_house.json
 src/data/current_members_senate.json
