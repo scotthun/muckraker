@@ -10,7 +10,6 @@ var apiURLs = {
   "current_members_senate": "https://api.propublica.org/congress/v1/117/senate/members.json"
 }
 
-
 class ProPublicaRequest{
   async handleRequest(requestURL) {
     const data = await axios.request({
@@ -39,7 +38,6 @@ module.exports = {
           console.log(error);
       });
 
-      
     }
 
     let idKey = "id";
