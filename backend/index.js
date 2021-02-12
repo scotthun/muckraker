@@ -1,24 +1,24 @@
-
-const {spawn} = require('child_process');
-
 var cron = require('node-cron');
- 
-var tools = require('./src/get_data.js');
-cron.schedule("*/10 * * * * *", function() {
-  
-  console.log("running a task every 10 second");
-});
+var dataHelper = require('./src/get_data.js');
 
-//tools.getData();
+//valid timezones: https://raw.githubusercontent.com/node-cron/tz-offset/a67968ab5b0efa6dee296dac32d3205b41f158e0/generated/offsets.json
+cron.schedule('0 0 0 * * *', function() {
+  dataHelper.getData();
+}, {
+    scheduled: true,
+    timezone: "America/Los_Angeles"
+}
+);
 
-const express = require('express')
-const app = express()
-const port = 3001
+
+const express = require('express');
+const app = express();
+const port = 3001;
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
-})
+});
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
-})
+});
