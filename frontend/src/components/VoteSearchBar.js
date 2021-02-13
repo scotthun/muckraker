@@ -31,20 +31,24 @@ export default function VoteSearchBar(props) {
     setCurrMemberName(newMemberName);
   };
 
-  const handleVoteMessage = (event, value) => {
-    var result = getMemberVoteResult();
-    setVoteMessage(result);
+  const handleVoteMessage = () => {
+    var url = require('./../data/key.json');
+    url = url['url']+ '/getMemberRecentVotes?id='+ currMemberID;
+    fetch(url)
+    .then(async (response) => {
+      const data = await response.json();
+      setVoteMessage(getMemberVoteResult(data));
+    });
   };
 
-  const clearVoteMessage = (event, value) => {
+  const clearVoteMessage = () => {
     setVoteMessage("");
   };
-  
-  function getMemberVoteResult() {
+
+  function getMemberVoteResult(memberObject) {
     if(currMemberID === ""){
       return "Please select a " + props.type + " to see how they voted.";
     }
-    var memberObject = require('../data/member_data/' + currMemberID + '.json');
     var memberVotes = memberObject["results"][0]["votes"];
     for(let vote of memberVotes){
       if(props.source === vote.vote_uri){
