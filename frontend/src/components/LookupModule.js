@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState, useEffect  } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Grid from '@material-ui/core/Grid';
@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Spacer from './Spacer.js'
 import VoteSummary from './VoteSummary.js'
-import {arrMembersAll} from '../data/prepare_data.js'
+import MemberData, {arrMembersAll} from '../data/prepare_data.js'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,6 +59,9 @@ export default function LookupModule(){
   const [currMember, setCurrMember] = React.useState(arrMembersAll[0]);
   const [width, height] = useWindowSize();
 
+  useEffect(() => {
+    //console.log("Hello from the LookupModule")
+  });
 
   const handleCurrMemberID = (event, value) => {
     var newMember = value === null ? "" : value.id;

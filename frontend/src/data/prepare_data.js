@@ -10,7 +10,7 @@ recentVotesSentate = recentVotesSentate["results"]["votes"];
 var recentVotesHouse = require('./recent_votes_house.json');
 recentVotesHouse = recentVotesHouse["results"]["votes"];
 
-class VoteData {
+export class VoteData {
   constructor(voteObject) {
       this.voteObject = voteObject;
   }
@@ -159,7 +159,7 @@ class VoteData {
   
 }
 
-class MemberData {
+export class MemberData {
   constructor(memberObject) {
       this.memberObject = memberObject;
   }

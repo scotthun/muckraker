@@ -2,7 +2,7 @@ var cron = require('node-cron');
 var dataHelper = require('./src/get_data.js');
 
 //valid timezones: https://raw.githubusercontent.com/node-cron/tz-offset/a67968ab5b0efa6dee296dac32d3205b41f158e0/generated/offsets.json
-cron.schedule('0 8 0 * * *', function() {
+cron.schedule('0 17 0 * * *', function() {
   dataHelper.getData();
 }, {
     scheduled: true,
