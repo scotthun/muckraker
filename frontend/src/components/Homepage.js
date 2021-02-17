@@ -56,7 +56,7 @@ export default function Homepage() {
       <Spacer/>
       <div id="dashboard"></div>
       <Spacer/>
-      <Dashboard data={/*JSON.stringify(membersSenate) + JSON.stringify(membersHouse) + JSON.stringify(votesSenate) + JSON.stringify(votesHouse)*/} />
+      <Dashboard data={JSON.stringify(membersSenate) + JSON.stringify(membersHouse) + JSON.stringify(votesSenate) + JSON.stringify(votesHouse)} />
       <div id='legislators'></div>
       <Spacer />
       <LookupLegislators />

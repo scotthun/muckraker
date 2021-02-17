@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function TabMenu() {
+export default function TabMenu(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [currVoteHouse, setCurrVoteHouse] = React.useState(0);

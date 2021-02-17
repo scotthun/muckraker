@@ -193,18 +193,6 @@ export class MemberData {
   
 }
 
-function getSenateVoteObjects() {
-  let url = require('./key.json');
-  let data = {};
-  url = url['url']+ '/getSenators';
-  fetch(url)
-  .then(async (response) => {
-    data = await response.json();
-    
-  });
-  return data;
-}
-
 
 let vote =  new VoteData(recentVotesHouse[15]);
 
@@ -234,6 +222,28 @@ for(let index of membersHouse) {
 
 var arrMembersAll = arrMembersSenate;
 arrMembersAll = arrMembersAll.concat(arrMembersHouse);
+
+function getLegislatorData(legislatorObject){
+  let legislators = legislatorObject["results"][0]["members"];
+  let legislatorsMemberData = new Array(); 
+  for(let index of legislators) {
+    let legislator = new MemberData(index);
+    legislatorsMemberData.push(legislator.getMemberData());
+  }
+  return legislatorsMemberData;
+}
+
+function getVotesData(votesObject){
+  let votes = votesObject["results"]["votes"];
+  let votesData = new Array(); 
+  for (let index of Object.keys(votes) ){
+    let voteTemp =  new VoteData(votesObject[index]);
+    votesData.push(voteTemp);
+  }
+  return votesData;
+}
+
+//["results"]["votes"]
 
 export {arrHouseVoteObjects}
 export {arrSenateVoteObjects}
