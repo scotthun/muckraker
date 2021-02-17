@@ -1,4 +1,5 @@
-import React, { useLayoutEffect, useState, useEffect  } from 'react';import Layout from './Layout.js'
+import React, { useState, useEffect  } from 'react';
+import Layout from './Layout.js'
 import Dashboard from './Dashboard.js'
 import Introduction from './Introduction.js'
 import Spacer from './Spacer.js'
@@ -37,6 +38,15 @@ export default function Homepage() {
     
   }
 
+  function getDataObject(){
+    let data = new Object();
+    data["membersSenate"] = membersSenate;
+    data["membersHouse"] = membersHouse;
+    data["votesSenate"] = votesSenate;
+    data["votesHouse"] = votesHouse;
+    return data;
+  }
+
   const [membersSenate, setMembersSenate] = useState(null);
   const [membersHouse, setMembersHouse] = useState(null);
   const [votesSenate, setVotesSenate] = useState(null);
@@ -56,10 +66,10 @@ export default function Homepage() {
       <Spacer/>
       <div id="dashboard"></div>
       <Spacer/>
-      <Dashboard data={JSON.stringify(membersSenate) + JSON.stringify(membersHouse) + JSON.stringify(votesSenate) + JSON.stringify(votesHouse)} />
+      <Dashboard data={getDataObject()} />
       <div id='legislators'></div>
       <Spacer />
-      <LookupLegislators />
+      <LookupLegislators data={getDataObject()}/>
     </Layout>
   );
 }

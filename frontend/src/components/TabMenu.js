@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect  } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -12,7 +12,11 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import './TabMenu.css'
 import Spacer from './Spacer.js'
-import {arrHouseVoteObjects, arrSenateVoteObjects, arrMembersSenate, arrMembersHouse, recentVotesHouse, recentVotesSentate} from '../data/prepare_data.js'
+import {
+        arrHouseVoteObjects, arrSenateVoteObjects,
+        recentVotesHouse, recentVotesSentate, 
+        generateLegislatorData
+       } from '../data/prepare_data.js'
 import StackedBarChart from './StackedBarChart.js'
 import PieChart from './PieChart.js'
 import VoteSearchBar from './VoteSearchBar.js'
@@ -87,6 +91,10 @@ export default function TabMenu(props) {
     setCurrVoteSenate(event.target.value);
   };
 
+  useEffect(() => {
+    //console.log('postObject',props?.data)
+  },[props?.data]);
+
   function generateLegendHints(voteObject) {
     return Object.keys(voteObject.getLegendHints()).map((key, index) => 
            key + " - " + voteObject.getLegendHints()[key].replace("_", " ") + 
@@ -148,7 +156,7 @@ export default function TabMenu(props) {
       <Spacer />
       <div className="wrap">
         <div className="one">
-          <VoteSearchBar members={arrMembersHouse} type="Representative" chamberVotes={recentVotesHouse} source={arrHouseVoteObjects[currVoteHouse].getSourceURL()}/>
+          <VoteSearchBar members={generateLegislatorData(props.data["membersHouse"])} type="Representative" chamberVotes={recentVotesHouse} source={arrHouseVoteObjects[currVoteHouse].getSourceURL()}/>
         </div>
         <div className="three"></div>
         <div className="two">
@@ -200,7 +208,7 @@ export default function TabMenu(props) {
         <Spacer />
         <div className="wrap">
           <div className="one">
-              <VoteSearchBar members={arrMembersSenate} type="Senator" chamberVotes={recentVotesSentate} source={arrSenateVoteObjects[currVoteSenate].getSourceURL()}/>
+              <VoteSearchBar members={generateLegislatorData(props.data["membersSenate"])} type="Senator" chamberVotes={recentVotesSentate} source={arrSenateVoteObjects[currVoteSenate].getSourceURL()}/>
           </div>
           <div className="three"></div>
           <div className="two">

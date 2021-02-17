@@ -224,6 +224,11 @@ var arrMembersAll = arrMembersSenate;
 arrMembersAll = arrMembersAll.concat(arrMembersHouse);
 
 function generateLegislatorData(legislatorObject){
+  if(legislatorObject === null || legislatorObject === undefined)
+  {
+    return;
+  }
+
   let legislators = legislatorObject["results"][0]["members"];
   let legislatorsMemberData = new Array(); 
   for(let index of legislators) {
@@ -243,7 +248,6 @@ function generateVotesData(votesObject){
   return votesData;
 }
 
-//["results"]["votes"]
 
 export {arrHouseVoteObjects}
 export {arrSenateVoteObjects}
@@ -252,4 +256,5 @@ export {arrMembersSenate}
 export {arrMembersAll}
 export {recentVotesHouse}
 export {recentVotesSentate}
-export {getSenateVoteObjects}
+export {generateLegislatorData}
+//export {getSenateVoteObjects}

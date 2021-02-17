@@ -3,7 +3,7 @@ import LookupModule from './LookupModule.js'
 import Spacer from './Spacer'
 import './LookupLegislators.css'
 
-export default function LookupLegislators(){
+export default function LookupLegislators(props){
 
   return (
     <div id="legislatorContainer">
