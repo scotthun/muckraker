@@ -193,6 +193,18 @@ export class MemberData {
   
 }
 
+function getSenateVoteObjects() {
+  let url = require('./key.json');
+  let data = {};
+  url = url['url']+ '/getSenators';
+  fetch(url)
+  .then(async (response) => {
+    data = await response.json();
+    
+  });
+  return data;
+}
+
 
 let vote =  new VoteData(recentVotesHouse[15]);
 
@@ -230,3 +242,4 @@ export {arrMembersSenate}
 export {arrMembersAll}
 export {recentVotesHouse}
 export {recentVotesSentate}
+export {getSenateVoteObjects}

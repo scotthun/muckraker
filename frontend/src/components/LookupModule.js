@@ -52,16 +52,12 @@ function useWindowSize() {
 }
 
 
-export default function LookupModule(){
+export default function LookupModule(props){
 
   const [currMemberID, setCurrMemberID] = React.useState(arrMembersAll[0].id);
   const [currMemberName, setCurrMemberName] = React.useState(arrMembersAll[0].name);
   const [currMember, setCurrMember] = React.useState(arrMembersAll[0]);
   const [width, height] = useWindowSize();
-
-  useEffect(() => {
-    //console.log("Hello from the LookupModule")
-  });
 
   const handleCurrMemberID = (event, value) => {
     var newMember = value === null ? "" : value.id;

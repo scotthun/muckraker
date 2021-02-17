@@ -32,6 +32,16 @@ app.get('/getRepresentatives', (req, res) => {
   res.json(representatives)
 });
 
+app.get('/getSenateVotes', (req, res) => {
+  let votesSenate = require('./src/data/recent_votes_senate.json');
+  res.json(votesSenate)
+});
+
+app.get('/getHouseVotes', (req, res) => {
+  let votesHouse = require('./src/data/recent_votes_house.json');
+  res.json(votesHouse)
+});
+
 app.get('/getMemberRecentVotes', (req, res) => {
 
   let id = req.query.id;
