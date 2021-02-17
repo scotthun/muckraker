@@ -223,7 +223,7 @@ for(let index of membersHouse) {
 var arrMembersAll = arrMembersSenate;
 arrMembersAll = arrMembersAll.concat(arrMembersHouse);
 
-function getLegislatorData(legislatorObject){
+function generateLegislatorData(legislatorObject){
   let legislators = legislatorObject["results"][0]["members"];
   let legislatorsMemberData = new Array(); 
   for(let index of legislators) {
@@ -233,7 +233,7 @@ function getLegislatorData(legislatorObject){
   return legislatorsMemberData;
 }
 
-function getVotesData(votesObject){
+function generateVotesData(votesObject){
   let votes = votesObject["results"]["votes"];
   let votesData = new Array(); 
   for (let index of Object.keys(votes) ){
