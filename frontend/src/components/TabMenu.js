@@ -136,12 +136,19 @@ export default function TabMenu(props) {
     );
   }
 
-  function generateMemberFromArray(members, index){
-    if(members === null){
+  function createVoteSummary(voteObject, index){
+    if(voteObject === null || voteObject === undefined)
+    {
       return;
     }
-    return members[index];
+
+    let vote = generateVotesData(voteObject)[index].getSummaryData();
+
+    return (
+      <VoteSummary data={vote} />
+    );
   }
+
 
   useEffect(() => {
     setSenators(props.data["membersSenate"]);
@@ -189,7 +196,7 @@ export default function TabMenu(props) {
       <Spacer />
       <div className="wrap">
         <div className="one">
-          <VoteSummary data={arrHouseVoteObjects[currVoteHouse].getSummaryData()} />
+          {createVoteSummary(props.data["votesHouse"], currVoteHouse)}
         </div>
         <div className="three"></div>
         <div className="two">
@@ -241,7 +248,7 @@ export default function TabMenu(props) {
         <Spacer />
         <div className="wrap">
           <div className="one">
-            <VoteSummary data={arrSenateVoteObjects[currVoteSenate].getSummaryData()}/>
+            {createVoteSummary(props.data["votesSenate"], currVoteSenate)}
           </div>
           <div className="three"></div>
           <div className="two">

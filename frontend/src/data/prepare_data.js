@@ -193,9 +193,6 @@ export class MemberData {
   
 }
 
-
-let vote =  new VoteData(recentVotesHouse[15]);
-
 var arrSenateVoteObjects = new Array();
 for (let index of Object.keys(recentVotesSentate) ){
   let vote =  new VoteData(recentVotesSentate[index]);
