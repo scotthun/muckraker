@@ -149,6 +149,37 @@ export default function TabMenu(props) {
     );
   }
 
+  function createVoteSearchBar(voteObject, index){
+    if(voteObject === null || voteObject === undefined)
+    {
+      return;
+    }
+
+    let vote = generateVotesData(voteObject)[index].getSummaryData();
+
+    return (
+      <VoteSummary data={vote} />
+    );
+  }
+
+  function createMenuItems(voteObject){
+    if(voteObject === null || voteObject === undefined)
+    {
+      return;
+    }
+
+    let votes = generateVotesData(voteObject);
+
+    return (
+      votes.map((obj, index) =>
+        <MenuItem className={classes.selection} value={index} key={index}>
+          {votes[index].getSelectBarText()}
+        </MenuItem>
+       )
+    );
+  }
+
+
 
   useEffect(() => {
     setSenators(props.data["membersSenate"]);
@@ -187,10 +218,9 @@ export default function TabMenu(props) {
             className={classes.selector}
             onChange={handleCurrVoteHouse}
             value={currVoteHouse}
-          >
-           {arrHouseVoteObjects.map((voteObject, index) =>
-            <MenuItem className={classes.selection} value={index} key={index}>{arrHouseVoteObjects[index].getSelectBarText()}</MenuItem>
-           )}
+        >
+
+          {createMenuItems(props.data["votesHouse"])}
         </Select>
       </Grid>
       <Spacer />
@@ -239,10 +269,8 @@ export default function TabMenu(props) {
               label="Hello"
               onChange={handleCurrVoteSenate}
               value={currVoteSenate}
-            >
-            {arrSenateVoteObjects.map((voteObject, index) =>
-            <MenuItem className={classes.selection} value={index} key={index}>{arrSenateVoteObjects[index].getSelectBarText()}</MenuItem>
-            )}
+          >
+            {createMenuItems(props.data["votesSenate"])}
           </Select>
         </Grid>
         <Spacer />
