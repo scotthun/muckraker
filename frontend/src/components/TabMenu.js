@@ -72,7 +72,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-//figure out way to replace arrays
 export default function TabMenu(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
@@ -95,7 +94,23 @@ export default function TabMenu(props) {
     setCurrVoteSenate(event.target.value);
   };
 
+  
   function createLegendHints(voteObject, index) {
+    if(voteObject === null || voteObject === undefined)
+    {
+      return;
+    }
+
+    //just have to do this pattern over and over for all the arrHouseVoteObjects and arrSenateVoteObjects
+    let vote = generateVotesData(voteObject)[index];
+
+    return Object.keys(vote.getLegendHints()).map((key, index) => 
+           key + " - " + vote.getLegendHints()[key].replace("_", " ") + 
+           (index === (Object.keys(vote.getLegendHints()).length-1) ? "" : ", "
+    )); 
+  }
+
+  function createPieChart(voteObject, index){
     if(voteObject === null || voteObject === undefined)
     {
       return;
@@ -103,10 +118,22 @@ export default function TabMenu(props) {
 
     let vote = generateVotesData(voteObject)[index];
 
-    return Object.keys(vote.getLegendHints()).map((key, index) => 
-           key + " - " + vote.getLegendHints()[key].replace("_", " ") + 
-           (index === (Object.keys(vote.getLegendHints()).length-1) ? "" : ", "
-    )); 
+    return (
+      <PieChart data={vote} />
+    );
+  }
+
+  function createStackedBarChart(voteObject, index){
+    if(voteObject === null || voteObject === undefined)
+    {
+      return;
+    }
+
+    let vote = generateVotesData(voteObject)[index];
+
+    return (
+      <StackedBarChart data={vote} />
+    );
   }
 
   function generateMemberFromArray(members, index){
@@ -172,7 +199,7 @@ export default function TabMenu(props) {
         <Typography variant="body1" align="center">
           { createLegendHints(props.data["votesHouse"], currVoteHouse) }
         </Typography>
-         <PieChart data={arrHouseVoteObjects[currVoteHouse]} />
+          { createPieChart(props.data["votesHouse"], currVoteHouse) }
         </div>
       </div>
       <Spacer />
@@ -188,7 +215,7 @@ export default function TabMenu(props) {
           <Typography variant="body1" align="center">
             { createLegendHints(props.data["votesHouse"], currVoteHouse) }
           </Typography>
-          <StackedBarChart data={arrHouseVoteObjects[currVoteHouse]} />
+          { createStackedBarChart(props.data["votesHouse"], currVoteHouse) }
         </div>
       </div>
       </TabPanel>
@@ -224,7 +251,7 @@ export default function TabMenu(props) {
           <Typography variant="body1" align="center">
             { createLegendHints(props.data["votesSenate"], currVoteSenate) }
           </Typography>
-            <PieChart data={arrSenateVoteObjects[currVoteSenate]} />
+          { createPieChart(props.data["votesSenate"], currVoteSenate) }
           </div>
         </div>
         <Spacer />
@@ -240,7 +267,7 @@ export default function TabMenu(props) {
             <Typography variant="body1" align="center">
               { createLegendHints(props.data["votesSenate"], currVoteSenate) }
             </Typography>
-            <StackedBarChart data={arrSenateVoteObjects[currVoteSenate]} />
+            { createStackedBarChart(props.data["votesSenate"], currVoteSenate) }
           </div>
         </div>
       </TabPanel>
