@@ -15,7 +15,7 @@ import Spacer from './Spacer.js'
 import {
         arrHouseVoteObjects, arrSenateVoteObjects,
         recentVotesHouse, recentVotesSentate, 
-        generateLegislatorData
+        generateLegislatorData, generateVotesData
        } from '../data/prepare_data.js'
 import StackedBarChart from './StackedBarChart.js'
 import PieChart from './PieChart.js'
@@ -72,12 +72,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
+//figure out way to replace arrays
 export default function TabMenu(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [currVoteHouse, setCurrVoteHouse] = React.useState(0);
   const [currVoteSenate, setCurrVoteSenate] = React.useState(0);
+  const [senators, setSenators] = React.useState(null);
+  const [representatives, setRepresentatives] = React.useState(null);
+  const [senateVotes, setSenateVotes] = React.useState(null);
+  const [houseVotes, setHouseVotes] = React.useState(null);
   
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -91,19 +95,37 @@ export default function TabMenu(props) {
     setCurrVoteSenate(event.target.value);
   };
 
-  useEffect(() => {
-    //console.log('postObject',props?.data)
-  },[props?.data]);
+  function createLegendHints(voteObject, index) {
+    if(voteObject === null || voteObject === undefined)
+    {
+      return;
+    }
 
-  function generateLegendHints(voteObject) {
-    return Object.keys(voteObject.getLegendHints()).map((key, index) => 
-           key + " - " + voteObject.getLegendHints()[key].replace("_", " ") + 
-           (index === (Object.keys(voteObject.getLegendHints()).length-1) ? "" : ", "
+    let vote = generateVotesData(voteObject)[index];
+
+    return Object.keys(vote.getLegendHints()).map((key, index) => 
+           key + " - " + vote.getLegendHints()[key].replace("_", " ") + 
+           (index === (Object.keys(vote.getLegendHints()).length-1) ? "" : ", "
     )); 
   }
 
+  function generateMemberFromArray(members, index){
+    if(members === null){
+      return;
+    }
+    return members[index];
+  }
+
+  useEffect(() => {
+    setSenators(props.data["membersSenate"]);
+    setRepresentatives(props.data["membersHouse"]);
+    setSenateVotes(props.data["votesSenate"]);
+    setHouseVotes(props.data["votesHouse"]);
+  },[props?.data]);
+
   return (
     <div className={classes.root}>
+      {console.log(generateVotesData(props.data["votesSenate"]))}
       <AppBar position="static" color="default">
         <Tabs
           value={value}
@@ -148,8 +170,8 @@ export default function TabMenu(props) {
             Vote count
         </Typography>
         <Typography variant="body1" align="center">
-            {generateLegendHints(arrHouseVoteObjects[currVoteHouse])}
-          </Typography>
+          { createLegendHints(props.data["votesHouse"], currVoteHouse) }
+        </Typography>
          <PieChart data={arrHouseVoteObjects[currVoteHouse]} />
         </div>
       </div>
@@ -164,7 +186,7 @@ export default function TabMenu(props) {
             Vote breakdown by party
           </Typography>
           <Typography variant="body1" align="center">
-            {generateLegendHints(arrHouseVoteObjects[currVoteHouse])}
+            { createLegendHints(props.data["votesHouse"], currVoteHouse) }
           </Typography>
           <StackedBarChart data={arrHouseVoteObjects[currVoteHouse]} />
         </div>
@@ -200,7 +222,7 @@ export default function TabMenu(props) {
             Vote count
           </Typography>
           <Typography variant="body1" align="center">
-            {generateLegendHints(arrSenateVoteObjects[currVoteSenate])}
+            { createLegendHints(props.data["votesSenate"], currVoteSenate) }
           </Typography>
             <PieChart data={arrSenateVoteObjects[currVoteSenate]} />
           </div>
@@ -216,7 +238,7 @@ export default function TabMenu(props) {
               Vote breakdown by party
             </Typography>
             <Typography variant="body1" align="center">
-             {generateLegendHints(arrSenateVoteObjects[currVoteSenate])}
+              { createLegendHints(props.data["votesSenate"], currVoteSenate) }
             </Typography>
             <StackedBarChart data={arrSenateVoteObjects[currVoteSenate]} />
           </div>

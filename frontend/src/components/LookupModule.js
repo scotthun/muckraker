@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Spacer from './Spacer.js'
 import VoteSummary from './VoteSummary.js'
-import MemberData, {arrMembersAll} from '../data/prepare_data.js'
+import {arrMembersAll, generateLegislatorData} from '../data/prepare_data.js'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,7 +68,11 @@ export default function LookupModule(props){
     setCurrMember(value);
   };
 
- const classes = useStyles();
+  useEffect(() => {
+    //console.log('postObject',props?.data) 
+  },[props?.data]);
+
+  const classes = useStyles();
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>

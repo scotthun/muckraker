@@ -239,10 +239,15 @@ function generateLegislatorData(legislatorObject){
 }
 
 function generateVotesData(votesObject){
+  if(votesObject === null || votesObject === undefined)
+  {
+    return;
+  }
+  
   let votes = votesObject["results"]["votes"];
   let votesData = new Array(); 
   for (let index of Object.keys(votes) ){
-    let voteTemp =  new VoteData(votesObject[index]);
+    let voteTemp =  new VoteData(votes[index]);
     votesData.push(voteTemp);
   }
   return votesData;
@@ -257,4 +262,5 @@ export {arrMembersAll}
 export {recentVotesHouse}
 export {recentVotesSentate}
 export {generateLegislatorData}
+export {generateVotesData}
 //export {getSenateVoteObjects}
