@@ -97,7 +97,6 @@ export default function TabMenu(props) {
       return;
     }
 
-    //just have to do this pattern over and over for all the arrHouseVoteObjects and arrSenateVoteObjects
     let vote = generateVotesData(voteObject)[index];
 
     return Object.keys(vote.getLegendHints()).map((key, index) => 

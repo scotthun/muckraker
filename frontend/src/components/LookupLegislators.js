@@ -7,7 +7,6 @@ import './LookupLegislators.css'
 export default function LookupLegislators(props){
  
   useEffect(() => {
-    //console.log('postObject',props?.data) 
   },[props?.data]);
 
   return (
