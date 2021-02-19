@@ -12,11 +12,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import './TabMenu.css'
 import Spacer from './Spacer.js'
-import {
-        arrHouseVoteObjects, arrSenateVoteObjects,
-        recentVotesHouse, recentVotesSentate, 
-        generateLegislatorData, generateVotesData
-       } from '../data/prepare_data.js'
+import {generateLegislatorData, generateVotesData} from '../data/prepare_data.js'
 import StackedBarChart from './StackedBarChart.js'
 import PieChart from './PieChart.js'
 import VoteSearchBar from './VoteSearchBar.js'
@@ -149,16 +145,18 @@ export default function TabMenu(props) {
     );
   }
 
-  function createVoteSearchBar(voteObject, index){
-    if(voteObject === null || voteObject === undefined)
-    {
+  function createVoteSearchBar(voteObject, membersObject, index, memberType){
+    if((voteObject === null || voteObject === undefined) 
+        || (membersObject === null || membersObject === undefined)){
       return;
     }
 
-    let vote = generateVotesData(voteObject)[index].getSummaryData();
+    let votes = voteObject["results"]["votes"]
+    let members = generateLegislatorData(membersObject);
+    let url = generateVotesData(voteObject)[index].getSourceURL();
 
     return (
-      <VoteSummary data={vote} />
+      <VoteSearchBar members={members} type={memberType} chamberVotes={votes} source={url}/>
     );
   }
 
@@ -242,7 +240,7 @@ export default function TabMenu(props) {
       <Spacer />
       <div className="wrap">
         <div className="one">
-          <VoteSearchBar members={generateLegislatorData(props.data["membersHouse"])} type="Representative" chamberVotes={recentVotesHouse} source={arrHouseVoteObjects[currVoteHouse].getSourceURL()}/>
+          {createVoteSearchBar(props.data["votesHouse"], props.data["membersHouse"], currVoteHouse, "Representative")}
         </div>
         <div className="three"></div>
         <div className="two">
@@ -292,7 +290,7 @@ export default function TabMenu(props) {
         <Spacer />
         <div className="wrap">
           <div className="one">
-              <VoteSearchBar members={generateLegislatorData(props.data["membersSenate"])} type="Senator" chamberVotes={recentVotesSentate} source={arrSenateVoteObjects[currVoteSenate].getSourceURL()}/>
+            {createVoteSearchBar(props.data["votesSenate"], props.data["membersSenate"], currVoteSenate, "Senator")}
           </div>
           <div className="three"></div>
           <div className="two">
