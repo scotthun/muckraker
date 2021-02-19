@@ -177,8 +177,6 @@ export default function TabMenu(props) {
     );
   }
 
-
-
   useEffect(() => {
     setSenators(props.data["membersSenate"]);
     setRepresentatives(props.data["membersHouse"]);
