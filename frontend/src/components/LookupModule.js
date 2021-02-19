@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-
 function useWindowSize() {
   const [size, setSize] = useState([0, 0]);
   useLayoutEffect(() => {
@@ -110,8 +109,6 @@ export default function LookupModule(props){
   useEffect(() => {
     setStatesAfterDataHasLoaded();
   },[props?.data]);
-
-  
 
   const classes = useStyles();
   return (

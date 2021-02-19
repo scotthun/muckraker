@@ -1,15 +1,3 @@
-var membersSenate = require('./current_members_senate.json');
-membersSenate = membersSenate["results"][0]["members"];
-
-var membersHouse = require('./current_members_house.json');
-membersHouse = membersHouse["results"][0]["members"];
-
-var recentVotesSentate = require('./recent_votes_senate.json');
-recentVotesSentate = recentVotesSentate["results"]["votes"];
-
-var recentVotesHouse = require('./recent_votes_house.json');
-recentVotesHouse = recentVotesHouse["results"]["votes"];
-
 export class VoteData {
   constructor(voteObject) {
       this.voteObject = voteObject;
@@ -193,33 +181,6 @@ export class MemberData {
   
 }
 
-var arrSenateVoteObjects = new Array();
-for (let index of Object.keys(recentVotesSentate) ){
-  let vote =  new VoteData(recentVotesSentate[index]);
-  arrSenateVoteObjects.push(vote);
-}
-
-var arrHouseVoteObjects = new Array();
-for (let index of Object.keys(recentVotesHouse) ){
-  let vote =  new VoteData(recentVotesHouse[index]);
-  arrHouseVoteObjects.push(vote);
-}
-
-var arrMembersSenate = new Array();
-for(let index of membersSenate) {
-  let member = new MemberData(index);
-  arrMembersSenate.push(member.getMemberData());
-}
-
-var arrMembersHouse = new Array();
-for(let index of membersHouse) {
-  let member = new MemberData(index);
-  arrMembersHouse.push(member.getMemberData());
-}
-
-var arrMembersAll = arrMembersSenate;
-arrMembersAll = arrMembersAll.concat(arrMembersHouse);
-
 function generateLegislatorData(legislatorObject){
   if(legislatorObject === null || legislatorObject === undefined)
   {
@@ -250,14 +211,5 @@ function generateVotesData(votesObject){
   return votesData;
 }
 
-
-export {arrHouseVoteObjects}
-export {arrSenateVoteObjects}
-export {arrMembersHouse}
-export {arrMembersSenate}
-export {arrMembersAll}
-export {recentVotesHouse}
-export {recentVotesSentate}
 export {generateLegislatorData}
 export {generateVotesData}
-//export {getSenateVoteObjects}
