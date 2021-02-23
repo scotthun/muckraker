@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState, useEffect  } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Grid from '@material-ui/core/Grid';
@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Spacer from './Spacer.js'
 import VoteSummary from './VoteSummary.js'
-import {arrMembersAll} from '../data/prepare_data.js'
+import {generateLegislatorData} from '../data/prepare_data.js'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
   }
 
 }));
-
 
 function useWindowSize() {
   const [size, setSize] = useState([0, 0]);
@@ -52,13 +51,12 @@ function useWindowSize() {
 }
 
 
-export default function LookupModule(){
+export default function LookupModule(props){
 
-  const [currMemberID, setCurrMemberID] = React.useState(arrMembersAll[0].id);
-  const [currMemberName, setCurrMemberName] = React.useState(arrMembersAll[0].name);
-  const [currMember, setCurrMember] = React.useState(arrMembersAll[0]);
+  const [currMemberID, setCurrMemberID] = React.useState(-1);
+  const [currMemberName, setCurrMemberName] = React.useState("");
+  const [currMember, setCurrMember] = React.useState(null);
   const [width, height] = useWindowSize();
-
 
   const handleCurrMemberID = (event, value) => {
     var newMember = value === null ? "" : value.id;
@@ -69,7 +67,50 @@ export default function LookupModule(){
     setCurrMember(value);
   };
 
- const classes = useStyles();
+  function setStatesAfterDataHasLoaded(){
+    if( (props.data["membersHouse"] === null || props.data["membersHouse"] === undefined)
+        || (props.data["membersSenate"] === null || props.data["membersSenate"] === undefined))
+    {
+      return;
+    }
+
+    let legislators = generateLegislatorData(props.data["membersHouse"]);
+    let senators = generateLegislatorData(props.data["membersSenate"]);
+    legislators.concat(senators);
+
+    setCurrMemberID(legislators[0].id)
+    setCurrMemberName(legislators[0].name)
+    setCurrMember(legislators[0]);
+
+  }
+
+  function createLegislatorsAutoComplete(){
+    if( (props.data["membersHouse"] === null || props.data["membersHouse"] === undefined)
+        || (props.data["membersSenate"] === null || props.data["membersSenate"] === undefined))
+    {
+      return;
+    }
+
+    let legislators = generateLegislatorData(props.data["membersHouse"]);
+    let senators = generateLegislatorData(props.data["membersSenate"]);
+    legislators.concat(senators);
+
+    return(
+      <Autocomplete
+        options={legislators}
+        getOptionLabel={(option) => option.name}
+        renderInput={(params) => <TextField {...params} label="Legislator" variant="outlined" />}
+        onChange={handleCurrMemberID}
+        disableClearable={true}
+      />
+    );
+  }
+
+  useEffect(() => {
+    setStatesAfterDataHasLoaded();
+  },[props?.data]);
+
+  const classes = useStyles();
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
@@ -79,13 +120,7 @@ export default function LookupModule(){
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Autocomplete
-              options={arrMembersAll}
-              getOptionLabel={(option) => option.name}
-              renderInput={(params) => <TextField {...params} label="Legislator" variant="outlined" />}
-              onChange={handleCurrMemberID}
-              disableClearable={true}
-          />
+          {createLegislatorsAutoComplete()}
         </Grid>
       </Grid>
       <Grid container ></Grid>

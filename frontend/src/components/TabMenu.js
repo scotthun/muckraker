@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect  } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -12,7 +12,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import './TabMenu.css'
 import Spacer from './Spacer.js'
-import {arrHouseVoteObjects, arrSenateVoteObjects, arrMembersSenate, arrMembersHouse, recentVotesHouse, recentVotesSentate} from '../data/prepare_data.js'
+import {generateLegislatorData, generateVotesData} from '../data/prepare_data.js'
 import StackedBarChart from './StackedBarChart.js'
 import PieChart from './PieChart.js'
 import VoteSearchBar from './VoteSearchBar.js'
@@ -68,12 +68,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-export default function TabMenu() {
+export default function TabMenu(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [currVoteHouse, setCurrVoteHouse] = React.useState(0);
   const [currVoteSenate, setCurrVoteSenate] = React.useState(0);
+  const [senators, setSenators] = React.useState(null);
+  const [representatives, setRepresentatives] = React.useState(null);
+  const [senateVotes, setSenateVotes] = React.useState(null);
+  const [houseVotes, setHouseVotes] = React.useState(null);
   
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -87,12 +90,98 @@ export default function TabMenu() {
     setCurrVoteSenate(event.target.value);
   };
 
-  function generateLegendHints(voteObject) {
-    return Object.keys(voteObject.getLegendHints()).map((key, index) => 
-           key + " - " + voteObject.getLegendHints()[key].replace("_", " ") + 
-           (index === (Object.keys(voteObject.getLegendHints()).length-1) ? "" : ", "
+  
+  function createLegendHints(voteObject, index) {
+    if(voteObject === null || voteObject === undefined)
+    {
+      return;
+    }
+
+    let vote = generateVotesData(voteObject)[index];
+
+    return Object.keys(vote.getLegendHints()).map((key, index) => 
+           key + " - " + vote.getLegendHints()[key].replace("_", " ") + 
+           (index === (Object.keys(vote.getLegendHints()).length-1) ? "" : ", "
     )); 
   }
+
+  function createPieChart(voteObject, index){
+    if(voteObject === null || voteObject === undefined)
+    {
+      return;
+    }
+
+    let vote = generateVotesData(voteObject)[index];
+
+    return (
+      <PieChart data={vote} />
+    );
+  }
+
+  function createStackedBarChart(voteObject, index){
+    if(voteObject === null || voteObject === undefined)
+    {
+      return;
+    }
+
+    let vote = generateVotesData(voteObject)[index];
+
+    return (
+      <StackedBarChart data={vote} />
+    );
+  }
+
+  function createVoteSummary(voteObject, index){
+    if(voteObject === null || voteObject === undefined)
+    {
+      return;
+    }
+
+    let vote = generateVotesData(voteObject)[index].getSummaryData();
+
+    return (
+      <VoteSummary data={vote} />
+    );
+  }
+
+  function createVoteSearchBar(voteObject, membersObject, index, memberType){
+    if((voteObject === null || voteObject === undefined) 
+        || (membersObject === null || membersObject === undefined)){
+      return;
+    }
+
+    let votes = voteObject["results"]["votes"]
+    let members = generateLegislatorData(membersObject);
+    let url = generateVotesData(voteObject)[index].getSourceURL();
+
+    return (
+      <VoteSearchBar members={members} type={memberType} chamberVotes={votes} source={url}/>
+    );
+  }
+
+  function createMenuItems(voteObject){
+    if(voteObject === null || voteObject === undefined)
+    {
+      return;
+    }
+
+    let votes = generateVotesData(voteObject);
+
+    return (
+      votes.map((obj, index) =>
+        <MenuItem className={classes.selection} value={index} key={index}>
+          {votes[index].getSelectBarText()}
+        </MenuItem>
+       )
+    );
+  }
+
+  useEffect(() => {
+    setSenators(props.data["membersSenate"]);
+    setRepresentatives(props.data["membersHouse"]);
+    setSenateVotes(props.data["votesSenate"]);
+    setHouseVotes(props.data["votesHouse"]);
+  },[props?.data]);
 
   return (
     <div className={classes.root}>
@@ -123,16 +212,15 @@ export default function TabMenu() {
             className={classes.selector}
             onChange={handleCurrVoteHouse}
             value={currVoteHouse}
-          >
-           {arrHouseVoteObjects.map((voteObject, index) =>
-            <MenuItem className={classes.selection} value={index} key={index}>{arrHouseVoteObjects[index].getSelectBarText()}</MenuItem>
-           )}
+        >
+
+          {createMenuItems(props.data["votesHouse"])}
         </Select>
       </Grid>
       <Spacer />
       <div className="wrap">
         <div className="one">
-          <VoteSummary data={arrHouseVoteObjects[currVoteHouse].getSummaryData()} />
+          {createVoteSummary(props.data["votesHouse"], currVoteHouse)}
         </div>
         <div className="three"></div>
         <div className="two">
@@ -140,15 +228,15 @@ export default function TabMenu() {
             Vote count
         </Typography>
         <Typography variant="body1" align="center">
-            {generateLegendHints(arrHouseVoteObjects[currVoteHouse])}
-          </Typography>
-         <PieChart data={arrHouseVoteObjects[currVoteHouse]} />
+          { createLegendHints(props.data["votesHouse"], currVoteHouse) }
+        </Typography>
+          { createPieChart(props.data["votesHouse"], currVoteHouse) }
         </div>
       </div>
       <Spacer />
       <div className="wrap">
         <div className="one">
-          <VoteSearchBar members={arrMembersHouse} type="Representative" chamberVotes={recentVotesHouse} source={arrHouseVoteObjects[currVoteHouse].getSourceURL()}/>
+          {createVoteSearchBar(props.data["votesHouse"], props.data["membersHouse"], currVoteHouse, "Representative")}
         </div>
         <div className="three"></div>
         <div className="two">
@@ -156,9 +244,9 @@ export default function TabMenu() {
             Vote breakdown by party
           </Typography>
           <Typography variant="body1" align="center">
-            {generateLegendHints(arrHouseVoteObjects[currVoteHouse])}
+            { createLegendHints(props.data["votesHouse"], currVoteHouse) }
           </Typography>
-          <StackedBarChart data={arrHouseVoteObjects[currVoteHouse]} />
+          { createStackedBarChart(props.data["votesHouse"], currVoteHouse) }
         </div>
       </div>
       </TabPanel>
@@ -175,16 +263,14 @@ export default function TabMenu() {
               label="Hello"
               onChange={handleCurrVoteSenate}
               value={currVoteSenate}
-            >
-            {arrSenateVoteObjects.map((voteObject, index) =>
-            <MenuItem className={classes.selection} value={index} key={index}>{arrSenateVoteObjects[index].getSelectBarText()}</MenuItem>
-            )}
+          >
+            {createMenuItems(props.data["votesSenate"])}
           </Select>
         </Grid>
         <Spacer />
         <div className="wrap">
           <div className="one">
-            <VoteSummary data={arrSenateVoteObjects[currVoteSenate].getSummaryData()}/>
+            {createVoteSummary(props.data["votesSenate"], currVoteSenate)}
           </div>
           <div className="three"></div>
           <div className="two">
@@ -192,15 +278,15 @@ export default function TabMenu() {
             Vote count
           </Typography>
           <Typography variant="body1" align="center">
-            {generateLegendHints(arrSenateVoteObjects[currVoteSenate])}
+            { createLegendHints(props.data["votesSenate"], currVoteSenate) }
           </Typography>
-            <PieChart data={arrSenateVoteObjects[currVoteSenate]} />
+          { createPieChart(props.data["votesSenate"], currVoteSenate) }
           </div>
         </div>
         <Spacer />
         <div className="wrap">
           <div className="one">
-              <VoteSearchBar members={arrMembersSenate} type="Senator" chamberVotes={recentVotesSentate} source={arrSenateVoteObjects[currVoteSenate].getSourceURL()}/>
+            {createVoteSearchBar(props.data["votesSenate"], props.data["membersSenate"], currVoteSenate, "Senator")}
           </div>
           <div className="three"></div>
           <div className="two">
@@ -208,9 +294,9 @@ export default function TabMenu() {
               Vote breakdown by party
             </Typography>
             <Typography variant="body1" align="center">
-             {generateLegendHints(arrSenateVoteObjects[currVoteSenate])}
+              { createLegendHints(props.data["votesSenate"], currVoteSenate) }
             </Typography>
-            <StackedBarChart data={arrSenateVoteObjects[currVoteSenate]} />
+            { createStackedBarChart(props.data["votesSenate"], currVoteSenate) }
           </div>
         </div>
       </TabPanel>

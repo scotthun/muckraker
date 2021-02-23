@@ -1,16 +1,4 @@
-var membersSenate = require('./current_members_senate.json');
-membersSenate = membersSenate["results"][0]["members"];
-
-var membersHouse = require('./current_members_house.json');
-membersHouse = membersHouse["results"][0]["members"];
-
-var recentVotesSentate = require('./recent_votes_senate.json');
-recentVotesSentate = recentVotesSentate["results"]["votes"];
-
-var recentVotesHouse = require('./recent_votes_house.json');
-recentVotesHouse = recentVotesHouse["results"]["votes"];
-
-class VoteData {
+export class VoteData {
   constructor(voteObject) {
       this.voteObject = voteObject;
   }
@@ -159,7 +147,7 @@ class VoteData {
   
 }
 
-class MemberData {
+export class MemberData {
   constructor(memberObject) {
       this.memberObject = memberObject;
   }
@@ -193,40 +181,35 @@ class MemberData {
   
 }
 
+function generateLegislatorData(legislatorObject){
+  if(legislatorObject === null || legislatorObject === undefined)
+  {
+    return;
+  }
 
-let vote =  new VoteData(recentVotesHouse[15]);
-
-var arrSenateVoteObjects = new Array();
-for (let index of Object.keys(recentVotesSentate) ){
-  let vote =  new VoteData(recentVotesSentate[index]);
-  arrSenateVoteObjects.push(vote);
+  let legislators = legislatorObject["results"][0]["members"];
+  let legislatorsMemberData = new Array(); 
+  for(let index of legislators) {
+    let legislator = new MemberData(index);
+    legislatorsMemberData.push(legislator.getMemberData());
+  }
+  return legislatorsMemberData;
 }
 
-var arrHouseVoteObjects = new Array();
-for (let index of Object.keys(recentVotesHouse) ){
-  let vote =  new VoteData(recentVotesHouse[index]);
-  arrHouseVoteObjects.push(vote);
+function generateVotesData(votesObject){
+  if(votesObject === null || votesObject === undefined)
+  {
+    return;
+  }
+  
+  let votes = votesObject["results"]["votes"];
+  let votesData = new Array(); 
+  for (let index of Object.keys(votes) ){
+    let voteTemp =  new VoteData(votes[index]);
+    votesData.push(voteTemp);
+  }
+  return votesData;
 }
 
-var arrMembersSenate = new Array();
-for(let index of membersSenate) {
-  let member = new MemberData(index);
-  arrMembersSenate.push(member.getMemberData());
-}
-
-var arrMembersHouse = new Array();
-for(let index of membersHouse) {
-  let member = new MemberData(index);
-  arrMembersHouse.push(member.getMemberData());
-}
-
-var arrMembersAll = arrMembersSenate;
-arrMembersAll = arrMembersAll.concat(arrMembersHouse);
-
-export {arrHouseVoteObjects}
-export {arrSenateVoteObjects}
-export {arrMembersHouse}
-export {arrMembersSenate}
-export {arrMembersAll}
-export {recentVotesHouse}
-export {recentVotesSentate}
+export {generateLegislatorData}
+export {generateVotesData}
