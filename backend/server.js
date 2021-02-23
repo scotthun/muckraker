@@ -17,7 +17,7 @@ const port = 8080;
 
 app.use(function (req, res, next) {
 
-  var allowedDomains = [validURLS["localhost"],validURLS["production_url"] ];
+  var allowedDomains = [validURLS["localhost"], validURLS["production_url"] ];
   var origin = req.headers.origin;
   if(allowedDomains.indexOf(origin) > -1){
     res.setHeader('Access-Control-Allow-Origin', origin);

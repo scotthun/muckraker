@@ -11,6 +11,7 @@ export default function Homepage() {
     let url = require('../data/key.json');
     var data = {};
     url = url['url']+ '/' + requestType;
+    console.log(url)
     fetch(url)
     .then(async (response) => {
       data = await response.json();
