@@ -65,6 +65,7 @@ module.exports = {
           fs.writeFile( './src/data/member_data/' + allMembers[i][idKey] + '.json', JSON.stringify(args[i].data), (err) => {
             if (err) {
               throw err;
+              console.log("Error reading data");
             }
           })
         }
