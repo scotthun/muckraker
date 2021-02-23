@@ -185,7 +185,6 @@ export default function TabMenu(props) {
 
   return (
     <div className={classes.root}>
-      {console.log(generateVotesData(props.data["votesSenate"]))}
       <AppBar position="static" color="default">
         <Tabs
           value={value}
